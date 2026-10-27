@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LAB42 Skjerm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* shadcn/ui – zinc, dark */
+:root{
+  --background:#09090b; --foreground:#fafafa;
+  --card:#0c0c0f; --muted:#18181b; --muted-foreground:#a1a1aa; --subtle:#71717a;
+  --border:#27272a; --input:#3f3f46;
+  --primary:#2dd4bf;
+  --warning:#f59e0b;
+  --radius:12px;
+  --c-lager:#2dd4bf; --c-utstyr:#3b82f6; --c-verksted:#f59e0b; --c-lokaler:#a855f7;
+  --c-transport:#6366f1; --c-biler:#84cc16; --c-ekstern:#ec4899; --c-felles:#a1a1aa;
+  --fs:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;background:var(--background);color:var(--foreground);overflow:hidden;cursor:none;
+  font-family:Geist,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.mono{font-family:"Geist Mono",ui-monospace,monospace}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;display:flex;flex-direction:column;padding:36px 44px 26px;gap:24px}
+
+header{display:flex;align-items:center;gap:28px}
+.logo{width:64px;height:64px;border-radius:14px;background:var(--foreground);color:var(--background);display:grid;place-items:center;font-weight:700;font-size:24px;letter-spacing:-.02em}
+.htxt .crumb{display:flex;align-items:center;gap:10px;font-size:18px;color:var(--muted-foreground)}
+.htxt .crumb svg{width:16px;height:16px;opacity:.6}
+.htxt h1{font-size:44px;font-weight:600;letter-spacing:-.025em;line-height:1.1;margin-top:2px}
+.hbadges{display:flex;gap:10px;margin-left:8px;align-self:flex-end;padding-bottom:8px}
+.clock{margin-left:auto;display:flex;align-items:center;gap:22px;border:1px solid var(--border);border-radius:var(--radius);padding:14px 24px;background:var(--card)}
+.clock .t{font-size:52px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1}
+.clock .sep{width:1px;align-self:stretch;background:var(--border)}
+.clock .d{font-size:20px;color:var(--muted-foreground);line-height:1.35}
+.clock .d b{display:block;color:var(--foreground);font-weight:500;font-size:22px}
+.clock .d b::first-letter{text-transform:uppercase}
+
+.badge{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);border-radius:8px;padding:4px 11px;font-size:15px;font-weight:500;color:var(--foreground);white-space:nowrap}
+.badge.secondary{background:var(--muted);border-color:transparent}
+.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--c,var(--primary))}
+
+main{flex:1;display:flex;gap:20px;min-height:0}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column;min-height:0;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.4)}
+.card-h{display:flex;align-items:center;gap:16px;padding:24px 26px 18px}
+.card-h .ttl{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.15}
+.card-h .desc{font-size:17px;color:var(--muted-foreground);margin-top:3px}
+.sep-h{height:1px;background:var(--border);margin:0 26px}
+.avatar{flex:none;width:52px;height:52px;border-radius:999px;background:var(--muted);border:1px solid var(--border);display:grid;place-items:center;font-size:21px;font-weight:600}
+.person{flex:1}
+.narrow .card-h{padding:22px 22px 16px;gap:14px}
+.narrow .avatar{width:46px;height:46px;font-size:19px}
+.narrow .card-h .ttl{font-size:25px}
+.narrow .sep-h{margin:0 22px}
+
+.pbody{flex:1;min-height:0;padding:18px 26px 22px;font-size:var(--fs);overflow:hidden}
+.narrow .pbody{padding:16px 22px 20px}
+.pbody.wide{column-width:16em;column-gap:44px;column-fill:auto}
+.group{break-inside:avoid;margin-bottom:1em}
+.glabel{margin-bottom:.35em;font-size:.68em}
+.glabel .badge{font-size:1em;padding:.18em .6em;border-radius:7px;gap:.45em;color:var(--muted-foreground)}
+.glabel .dot{width:.5em;height:.5em}
+.task{display:flex;gap:.65em;align-items:flex-start;padding:.42em 0;line-height:1.3;break-inside:avoid;border-bottom:1px solid rgba(39,39,42,.6)}
+.group .task:last-child{border-bottom:0}
+.cb{flex:none;width:.78em;height:.78em;margin-top:.26em;border:1.5px solid var(--input);border-radius:5px}
+.ttext{flex:1;font-weight:500}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:.6em;margin-top:.3em;font-size:.7em;font-weight:400;color:var(--muted-foreground)}
+.with{display:inline-flex;align-items:center;gap:.45em}
+.stack{display:inline-flex}
+.stack span{width:1.6em;height:1.6em;border-radius:99px;background:var(--muted);border:1.5px solid var(--card);display:grid;place-items:center;font-size:.72em;font-weight:600;color:var(--foreground);margin-left:-.4em}
+.stack span:first-child{margin-left:0}
+.note{border:1px dashed var(--input);border-radius:6px;padding:.05em .5em}
+.alert{display:flex;align-items:center;gap:.45em;margin-top:.45em;font-size:.72em;font-weight:500;color:var(--warning);border:1px solid rgba(245,158,11,.4);background:rgba(245,158,11,.08);border-radius:8px;padding:.35em .65em}
+.alert svg{width:1.1em;height:1.1em;flex:none}
+.empty{color:var(--muted-foreground);font-size:.85em;padding-top:.3em}
+
+.side{width:440px;flex:none;display:flex;flex-direction:column;gap:20px}
+.side .card-h .ttl{font-size:24px}
+.rlist{padding:6px 26px 18px}
+.ritem{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--border)}
+.ritem:last-child{border:0}
+.ritem .ic{flex:none;width:44px;height:44px;border-radius:10px;background:var(--muted);display:grid;place-items:center}
+.ritem .ic svg{width:22px;height:22px;color:var(--muted-foreground)}
+.ritem b{display:block;font-size:22px;font-weight:600}
+.ritem span{display:block;font-size:17px;color:var(--muted-foreground);margin-top:2px}
+.msg{flex:1}
+.msg p{padding:20px 26px;font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.25}
+
+.agenda{flex:1.1}
+.alist{flex:1;padding:8px 26px 20px;overflow:hidden}
+.aday{padding:14px 0 4px}
+.aday h4{font-size:15px;font-weight:500;color:var(--muted-foreground);margin-bottom:10px}
+.aday.today h4{color:var(--primary)}
+.job{display:grid;grid-template-columns:6px 118px 1fr auto;gap:18px;align-items:center;padding:14px 18px 14px 14px;border:1px solid var(--border);border-radius:10px;margin-bottom:10px}
+.job .bar{align-self:stretch;border-radius:9px;background:var(--c,var(--primary))}
+.job .when{font-size:17px;color:var(--muted-foreground);line-height:1.4;font-variant-numeric:tabular-nums}
+.job .when b{color:var(--foreground);font-weight:500}
+.job .what b{display:block;font-size:24px;font-weight:600;letter-spacing:-.01em}
+.job .what span{display:block;font-size:17px;color:var(--muted-foreground);margin-top:3px}
+.cal{flex:1}
+.grid{flex:1;display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:auto repeat(3,1fr);gap:6px;padding:16px 22px 22px}
+.dow{font-size:15px;color:var(--muted-foreground);text-align:center;padding-bottom:6px}
+.day{border-radius:9px;padding:9px 9px 7px;display:flex;flex-direction:column;gap:5px;min-height:0;overflow:hidden;border:1px solid transparent}
+.day:not(.past){background:rgba(24,24,27,.55)}
+.day.past{opacity:.35}
+.day .n{font-size:17px;font-weight:500;color:var(--muted-foreground);font-variant-numeric:tabular-nums}
+.day .n small{font-size:12px;color:var(--subtle);margin-left:3px}
+.day.today{border-color:var(--primary);background:rgba(45,212,191,.08)}
+.day.today .n{color:var(--primary)}
+.ev{font-size:13px;font-weight:600;line-height:1.2;padding:4px 7px;border-radius:6px;background:color-mix(in srgb,var(--c,var(--primary)) 18%,transparent);color:var(--c,var(--primary));border-left:3px solid var(--c,var(--primary));overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word}
+.undated{padding:0 22px 20px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:15px;color:var(--muted-foreground)}
+
+footer{display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--subtle)}
+footer .live{display:flex;align-items:center;gap:9px}
+footer .pulse{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.15)}
+footer .pulse.off{background:var(--warning);box-shadow:0 0 0 4px rgba(245,158,11,.15)}
+</style>
+</head>
+<body>
+<div id="stage">
+  <header>
+    <div class="logo">42</div>
+    <div class="htxt">
+      <div class="crumb">LAB42 AS <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg> <span id="h-sub">Drift</span></div>
+      <h1 id="h-title">Gjøreliste</h1>
+    </div>
+    <div class="hbadges" id="h-badges"></div>
+    <div class="clock"><div class="t mono" id="clock">--:--</div><div class="sep"></div><div class="d" id="date"></div></div>
+  </header>
+  <main id="main"></main>
+  <footer><div id="f-screen"></div><div class="live"><span class="pulse" id="dot"></span><span id="f-upd">Laster…</span></div></footer>
+</div>
+
+<script>
+const P=new URLSearchParams(location.search);
+const SCREEN=(P.get('skjerm')||P.get('s')||'venstre').toLowerCase();
+const DATA_URL=P.get('data')||'data.json';
+const POLL_MS=60*1000;
+
+const CAT={'lager':'--c-lager','utstyr':'--c-utstyr','verksted':'--c-verksted','lokaler':'--c-lokaler','transport':'--c-transport',
+  'biler':'--c-biler','ekstern/kunde':'--c-ekstern','ekstern':'--c-ekstern','felles':'--c-felles'};
+const TYPE={'utleie':'--c-utstyr','retur':'--c-verksted','levering':'--c-lager','rigg':'--c-lokaler','event':'--c-ekstern','transport':'--c-transport'};
+const cvar=(m,k)=>`var(${m[(k||'').toLowerCase()]||'--primary'})`;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ICON={
+  alert:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
+  box:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>'
+};
+
+function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);document.getElementById('stage').style.transform=`translate(${(innerWidth-1920*s)/2}px,${(innerHeight-1080*s)/2}px) scale(${s})`;}
+addEventListener('resize',fit);fit();
+
+function osloNow(){return new Date(new Date().toLocaleString('en-US',{timeZone:'Europe/Oslo'}));}
+function isoWeek(d){const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const n=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-n);const y=new Date(Date.UTC(t.getUTCFullYear(),0,1));return Math.ceil(((t-y)/864e5+1)/7);}
+const fmtWd=new Intl.DateTimeFormat('nb-NO',{weekday:'long',timeZone:'Europe/Oslo'});
+const fmtDm=new Intl.DateTimeFormat('nb-NO',{day:'numeric',month:'long',year:'numeric',timeZone:'Europe/Oslo'});
+function tick(){const n=osloNow();
+  document.getElementById('clock').textContent=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
+  document.getElementById('date').innerHTML=`<b>${fmtWd.format(new Date())}</b>${fmtDm.format(new Date())}`;}
+setInterval(tick,1000);tick();
+
+function groupTasks(list){const g=[],idx={};for(const t of list||[]){const k=t.kategori||'Annet';if(!(k in idx)){idx[k]=g.length;g.push({k,items:[]});}g[idx[k]].items.push(t);}return g;}
+
+function taskHTML(t){
+  const med=t.med||[];
+  const meta=[
+    med.length?`<span class="with"><span class="stack">${med.map(m=>`<span>${esc(m[0])}</span>`).join('')}</span>med ${esc(med.join(', ').replace(/, ([^,]*)$/,' og $1'))}</span>`:'',
+    t.notat?`<span class="note">${esc(t.notat)}</span>`:''
+  ].filter(Boolean).join('');
+  return `<div class="task"><span class="cb"></span><div class="ttext">${esc(t.tekst)}${meta?`<div class="meta">${meta}</div>`:''}${t.advarsel?`<div class="alert">${ICON.alert}${esc(t.advarsel)}</div>`:''}</div></div>`;
+}
+
+function personCard(p,wide){
+  const tasks=p.oppgaver||[];const groups=groupTasks(tasks);
+  return `<section class="card person${wide?'':' narrow'}">
+    <div class="card-h"><div class="avatar">${esc((p.navn||'?')[0])}</div>
+      <div><div class="ttl">${esc(p.navn)}</div><div class="desc">${tasks.length} ${tasks.length===1?'oppgave':'oppgaver'} · ${groups.length} ${groups.length===1?'område':'områder'}</div></div></div>
+    <div class="sep-h"></div>
+    <div class="pbody${wide?' wide':''}">${groups.map(g=>`<div class="group">
+        <div class="glabel"><span class="badge" style="--c:${cvar(CAT,g.k)}"><span class="dot"></span>${esc(g.k)}</span></div>
+        ${g.items.map(taskHTML).join('')}</div>`).join('')||'<div class="empty">Ingen oppgaver i dag.</div>'}</div>
+  </section>`;
+}
+
+function sidePanel(d){
+  const u=d.utleid||[];
+  return `<aside class="side">
+    <section class="card"><div class="card-h"><div><div class="ttl">Utstyr utleid</div><div class="desc">${u.length} ute nå</div></div></div><div class="sep-h"></div>
+      <div class="rlist">${u.map(x=>`<div class="ritem"><div class="ic">${ICON.box}</div><div><b>${esc(x.navn)}</b><span>${esc(x.info)}</span></div></div>`).join('')||'<div class="empty" style="padding:16px 0">Ingenting ute nå</div>'}</div></section>
+    <section class="card msg"><div class="card-h"><div><div class="ttl">Beskjed</div></div></div><div class="sep-h"></div><p>${esc(d.beskjed||'')}</p></section>
+  </aside>`;
+}
+
+function parseD(s){if(!s)return null;const[y,m,dd]=s.slice(0,10).split('-').map(Number);return new Date(y,m-1,dd);}
+const dayKey=d=>`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+const fmtShort=new Intl.DateTimeFormat('nb-NO',{day:'numeric',month:'short'});
+const fmtDay=new Intl.DateTimeFormat('nb-NO',{weekday:'long',day:'numeric',month:'long'});
+
+function renderOppdrag(d){
+  const today=osloNow();today.setHours(0,0,0,0);
+  const jobs=(d.oppdrag||[]).map(j=>({...j,f:parseD(j.fra),t:parseD(j.til)||parseD(j.fra)}));
+  const dated=jobs.filter(j=>j.f&&j.t>=today).sort((a,b)=>a.f-b.f);
+  const undated=jobs.filter(j=>!j.f);
+  const days={},order=[];
+  for(const j of dated){const on=j.f<today;const k=on?'pågår':dayKey(j.f);if(!(k in days)){days[k]=[];order.push([k,on?today:j.f]);}days[k].push(j);}
+  const label=(k,dt)=>{if(k==='pågår')return 'Pågår nå';const diff=Math.round((dt-today)/864e5);const s=diff===0?'I dag':diff===1?'I morgen':fmtDay.format(dt);return s[0].toUpperCase()+s.slice(1);};
+  const row=j=>`<div class="job" style="--c:${cvar(TYPE,j.type)}"><div class="bar"></div>
+      <div class="when">${j.f?`<b>${fmtShort.format(j.f)}</b>${j.t&&j.t-j.f?`<br>→ ${fmtShort.format(j.t)}`:''}${j.tid?`<br>${esc(j.tid)}`:''}`:'Ikke satt'}</div>
+      <div class="what"><b>${esc(j.tittel)}</b><span>${esc([j.sted,j.info].filter(Boolean).join(' · '))}</span></div>
+      <span class="badge" style="--c:${cvar(TYPE,j.type)}"><span class="dot"></span>${esc(j.type||'Oppdrag')}</span></div>`;
+  let agenda=order.slice(0,6).map(([k,dt])=>`<div class="aday${k===dayKey(today)?' today':''}"><h4>${esc(label(k,dt))}</h4>${days[k].map(row).join('')}</div>`).join('');
+  if(undated.length)agenda+=`<div class="aday"><h4>Uten dato</h4>${undated.map(row).join('')}</div>`;
+  if(!agenda)agenda='<div class="empty" style="padding-top:20px;font-size:20px">Ingen kommende oppdrag lagt inn.</div>';
+
+  const start=new Date(today);start.setDate(start.getDate()-((start.getDay()+6)%7));
+  let cells=['Ma','Ti','On','To','Fr','Lø','Sø'].map(x=>`<div class="dow">${x}</div>`).join('');
+  for(let i=0;i<21;i++){const dt=new Date(start);dt.setDate(start.getDate()+i);
+    const evs=jobs.filter(j=>j.f&&dt>=j.f&&dt<=j.t);
+    cells+=`<div class="day${dt<today?' past':''}${+dt===+today?' today':''}"><div class="n">${dt.getDate()}${dt.getDate()===1||i===0?`<small>${fmtShort.format(dt).replace(/^\d+\.?\s*/,'')}</small>`:''}</div>
+      ${evs.slice(0,3).map(j=>`<div class="ev" style="--c:${cvar(TYPE,j.type)}">${esc(j.tittel)}</div>`).join('')}${evs.length>3?`<div class="ev">+${evs.length-3}</div>`:''}</div>`;}
+
+  return `<section class="card agenda"><div class="card-h"><div><div class="ttl">Kommende oppdrag</div><div class="desc">${dated.length+undated.length} oppdrag</div></div></div><div class="sep-h"></div><div class="alist">${agenda}</div></section>
+    <section class="card cal"><div class="card-h"><div><div class="ttl">Kalender</div><div class="desc">Neste tre uker</div></div></div><div class="sep-h"></div><div class="grid">${cells}</div>
+      ${undated.length?`<div class="undated">Uten dato: ${undated.map(j=>`<span class="badge" style="--c:${cvar(TYPE,j.type)}"><span class="dot"></span>${esc(j.tittel)}</span>`).join('')}</div>`:''}</section>`;
+}
+
+function autofit(){
+  document.querySelectorAll('.pbody').forEach(b=>{
+    let fs=23;b.style.setProperty('--fs',fs+'px');
+    const over=()=>b.classList.contains('wide')?b.scrollWidth>b.clientWidth+2:b.scrollHeight>b.clientHeight+2;
+    while(over()&&fs>14){fs-=.5;b.style.setProperty('--fs',fs+'px');}
+  });
+}
+
+let lastJSON='';
+function render(d){
+  const cfg=(d.skjermer||{})[SCREEN]||{};
+  const n=osloNow();
+  document.getElementById('h-title').textContent=cfg.tittel||'Gjøreliste';
+  document.getElementById('h-sub').textContent=SCREEN==='hoyre'?'Oppdrag':(d.undertittel||'Drift');
+  document.getElementById('h-badges').innerHTML=`<span class="badge secondary">Uke ${isoWeek(n)}</span>${d.frist&&SCREEN!=='hoyre'?`<span class="badge" style="--c:var(--warning)"><span class="dot"></span>Frist ${esc(d.frist)}</span>`:''}`;
+  document.getElementById('f-screen').textContent={venstre:'Skjerm 1 av 3 · Venstre',midt:'Skjerm 2 av 3 · Midt',hoyre:'Skjerm 3 av 3 · Høyre'}[SCREEN]||SCREEN;
+  const main=document.getElementById('main');
+  if(SCREEN==='hoyre')main.innerHTML=renderOppdrag(d)+sidePanel(d);
+  else{const cols=(cfg.kolonner||[]).map(k=>d.personer?.[k]).filter(Boolean);const wide=cols.length<=2;
+    main.innerHTML=cols.map(p=>personCard(p,wide)).join('')+(cfg.sidepanel?sidePanel(d):'');}
+  requestAnimationFrame(()=>requestAnimationFrame(autofit));
+}
+
+async function load(){
+  try{
+    const r=await fetch(DATA_URL+(DATA_URL.includes('?')?'&':'?')+'t='+Date.now(),{cache:'no-store'});
+    if(!r.ok)throw new Error(r.status);
+    const txt=await r.text();const d=JSON.parse(txt);
+    if(txt!==lastJSON){lastJSON=txt;render(d);}
+    document.getElementById('dot').classList.remove('off');
+    const u=d.oppdatert?new Date(d.oppdatert):null;
+    document.getElementById('f-upd').textContent=u&&!isNaN(u)?`Live · oppdatert ${u.toLocaleString('nb-NO',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}`:'Live';
+  }catch(e){
+    document.getElementById('dot').classList.add('off');
+    document.getElementById('f-upd').textContent=lastJSON?'Frakoblet · viser sist kjente':'Får ikke hentet data';
+  }
+}
+document.fonts?.ready.then(()=>lastJSON&&autofit());
+load();setInterval(load,POLL_MS);
+setTimeout(()=>location.reload(),6*3600*1000);
+</script>
+</body>
+</html>

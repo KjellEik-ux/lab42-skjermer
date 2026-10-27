@@ -1,0 +1,86 @@
+{
+  "oppdatert": "2026-10-27T10:15",
+  "undertittel": "Lager og verksted",
+  "beskjed": "Ha en fin dag!",
+
+  "skjermer": {
+    "venstre": { "tittel": "Gjøreliste", "kolonner": ["andy", "christoph"] },
+    "midt":    { "tittel": "Gjøreliste", "kolonner": ["kristian", "johannes", "annkarin"], "sidepanel": true },
+    "hoyre":   { "tittel": "Kommende oppdrag" }
+  },
+
+  "personer": {
+    "andy": {
+      "navn": "Andy",
+      "oppgaver": [
+        { "kategori": "Lager", "tekst": "Reoler ved ventilasjon – rydd gangen før utstyr plasseres" },
+        { "kategori": "Lager", "tekst": "Flytt høyttalere opp, plasser cases/rack", "notat": "Status uavklart" },
+        { "kategori": "Lager", "tekst": "Sorter kabler etter type/funksjon" },
+        { "kategori": "Lager", "tekst": "Rydd gang for HOAC denne uken" },
+        { "kategori": "Utstyr", "tekst": "Rydd og sett i stand flightcases" },
+        { "kategori": "Utstyr", "tekst": "Rengjør/kompletter alle tårnvogner" },
+        { "kategori": "Utstyr", "tekst": "Test liten gulvvasker med batteribytte – behold brukbare batterier" },
+        { "kategori": "Verksted", "tekst": "Avklar/bygg 1–2 dollyer til liten tross", "med": ["Kristian", "Christoph"] },
+        { "kategori": "Lokaler", "tekst": "Vurder riving ved Uttrykk", "med": ["Christoph"] },
+        { "kategori": "Lokaler", "tekst": "Demonter vifte", "advarsel": "Bekreft at strømmen er frakoblet først" },
+        { "kategori": "Transport", "tekst": "Tøm siste 40-fotscontainer i Drammen", "med": ["Kristian", "Christoph"] },
+        { "kategori": "Ekstern/kunde", "tekst": "Avtal befaring med Dag", "med": ["Christoph"] },
+        { "kategori": "Ekstern/kunde", "tekst": "Gjerde til FirstAudio", "med": ["Christoph", "Kristian"] }
+      ]
+    },
+    "christoph": {
+      "navn": "Christoph",
+      "oppgaver": [
+        { "kategori": "Lager", "tekst": "Rydd øvre etasje – sorter LED/video", "med": ["Annkarin", "Johannes"] },
+        { "kategori": "Lager", "tekst": "Fjern fremmed utstyr, avklar dekk", "med": ["Isak"] },
+        { "kategori": "Lager", "tekst": "NRK-tribune/deler: avklar lagring og tilkomst for stor bil" },
+        { "kategori": "Utstyr", "tekst": "Gjennomgå: behold, selg eller ta ut", "med": ["Isak"] },
+        { "kategori": "Utstyr", "tekst": "Finn misplassert stiftepistol – test på restmateriale når funnet" },
+        { "kategori": "Verksted", "tekst": "Avklar/bygg 1–2 dollyer til liten tross", "med": ["Andy", "Kristian"] },
+        { "kategori": "Lokaler", "tekst": "Følg opp utleier: dør- og veggendringer" },
+        { "kategori": "Lokaler", "tekst": "Vurder riving ved Uttrykk", "med": ["Andy"] },
+        { "kategori": "Lokaler", "tekst": "Følg opp lagerstrøm", "notat": "Ansvar må bekreftes" },
+        { "kategori": "Transport", "tekst": "Tøm siste 40-fotscontainer i Drammen", "med": ["Andy", "Kristian"] },
+        { "kategori": "Transport", "tekst": "Reco-transport med Crafter" },
+        { "kategori": "Biler", "tekst": "Dekkbytte Crafter/Maxus hos Møller Bil", "med": ["Johannes"] },
+        { "kategori": "Ekstern/kunde", "tekst": "Avtal befaring med Dag", "med": ["Andy"] },
+        { "kategori": "Ekstern/kunde", "tekst": "Gjerde til FirstAudio", "med": ["Andy", "Kristian"] }
+      ]
+    },
+    "kristian": {
+      "navn": "Kristian",
+      "oppgaver": [
+        { "kategori": "Verksted", "tekst": "Avklar/bygg 1–2 dollyer til liten tross", "med": ["Andy", "Christoph"] },
+        { "kategori": "Verksted", "tekst": "Monter låsbare hjul på store arbeidsbord" },
+        { "kategori": "Transport", "tekst": "Tøm siste 40-fotscontainer i Drammen", "med": ["Andy", "Christoph"] },
+        { "kategori": "Ekstern/kunde", "tekst": "Gjerde til FirstAudio", "med": ["Andy", "Christoph"] }
+      ]
+    },
+    "johannes": {
+      "navn": "Johannes",
+      "oppgaver": [
+        { "kategori": "Utstyr", "tekst": "Merk/registrer utstyr i Rentman", "med": ["Isak"] },
+        { "kategori": "Lager", "tekst": "Rydd øvre etasje – sorter LED/video", "med": ["Christoph", "Annkarin"] },
+        { "kategori": "Biler", "tekst": "Dekkbytte Crafter/Maxus hos Møller Bil", "med": ["Christoph"] },
+        { "kategori": "Felles", "tekst": "Still inn kaffemaskinen" }
+      ]
+    },
+    "annkarin": {
+      "navn": "Annkarin",
+      "oppgaver": [
+        { "kategori": "Lager", "tekst": "Rydd øvre etasje" },
+        { "kategori": "Lager", "tekst": "Sorter LED-/videoutstyr", "med": ["Christoph", "Johannes"] }
+      ]
+    }
+  },
+
+  "utleid": [
+    { "navn": "AM1 – Tribune", "info": "Leveres tidlig denne uken" },
+    { "navn": "Skal vi danse", "info": "Sluttdato ikke oppgitt" }
+  ],
+
+  "oppdrag": [
+    { "tittel": "AM1 – Tribune", "type": "Retur", "fra": null, "til": null, "info": "Leveres tidlig denne uken" },
+    { "tittel": "Skal vi danse", "type": "Utleie", "fra": null, "til": null, "info": "Pågår – sluttdato ikke oppgitt" }
+  ]
+}
