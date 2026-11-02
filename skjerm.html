@@ -13,7 +13,7 @@
   --card:#0c0c0f; --muted:#18181b; --muted-foreground:#a1a1aa; --subtle:#71717a;
   --border:#27272a; --input:#3f3f46;
   --primary:#2dd4bf;
-  --warning:#f59e0b;
+  --warning:#f59e0b; --danger:#ef4444;
   --radius:12px;
   --c-lager:#2dd4bf; --c-utstyr:#3b82f6; --c-verksted:#f59e0b; --c-lokaler:#a855f7;
   --c-transport:#6366f1; --c-biler:#84cc16; --c-ekstern:#ec4899; --c-felles:#a1a1aa;
@@ -76,6 +76,20 @@ main{flex:1;display:flex;gap:20px;min-height:0}
 .alert{display:flex;align-items:center;gap:.45em;margin-top:.45em;font-size:.72em;font-weight:500;color:var(--warning);border:1px solid rgba(245,158,11,.4);background:rgba(245,158,11,.08);border-radius:8px;padding:.35em .65em}
 .alert svg{width:1.1em;height:1.1em;flex:none}
 .empty{color:var(--muted-foreground);font-size:.85em;padding-top:.3em}
+.badge.danger{color:#fecaca;border-color:rgba(239,68,68,.55);background:rgba(239,68,68,.16)}
+.badge.danger .dot{background:var(--danger);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.6)}50%{box-shadow:0 0 0 .35em rgba(239,68,68,0)}}
+.badge svg{width:1.05em;height:1.05em}
+.card-h .right{margin-left:auto}
+.group.haster{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.4);border-radius:10px;padding:.55em .75em .25em}
+.group.haster .glabel .badge{color:#fecaca;border-color:rgba(239,68,68,.55);background:rgba(239,68,68,.16)}
+.group.haster .cb{border-color:var(--danger)}
+.group.haster .task{border-bottom-color:rgba(239,68,68,.2)}
+.group.loop{border-top:1px dashed var(--input);padding-top:.7em}
+.group.loop .ttext{color:var(--muted-foreground);font-weight:500}
+.group.loop .cb{border-style:dashed;border-radius:50%}
+.catnote{color:var(--subtle)}
+.side .grow{flex:1}
 
 .side{width:440px;flex:none;display:flex;flex-direction:column;gap:20px}
 .side .card-h .ttl{font-size:24px}
@@ -146,6 +160,7 @@ const TYPE={'utleie':'--c-utstyr','retur':'--c-verksted','levering':'--c-lager',
 const cvar=(m,k)=>`var(${m[(k||'').toLowerCase()]||'--primary'})`;
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ICON={
+  loop:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>',
   alert:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
   box:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>'
 };
@@ -164,9 +179,10 @@ setInterval(tick,1000);tick();
 
 function groupTasks(list){const g=[],idx={};for(const t of list||[]){const k=t.kategori||'Annet';if(!(k in idx)){idx[k]=g.length;g.push({k,items:[]});}g[idx[k]].items.push(t);}return g;}
 
-function taskHTML(t){
+function taskHTML(t,showCat){
   const med=t.med||[];
   const meta=[
+    showCat&&t.kategori?`<span class="catnote">${esc(t.kategori)}</span>`:'',
     med.length?`<span class="with"><span class="stack">${med.map(m=>`<span>${esc(m[0])}</span>`).join('')}</span>med ${esc(med.join(', ').replace(/, ([^,]*)$/,' og $1'))}</span>`:'',
     t.notat?`<span class="note">${esc(t.notat)}</span>`:''
   ].filter(Boolean).join('');
@@ -174,26 +190,35 @@ function taskHTML(t){
 }
 
 function personCard(p,wide){
-  const tasks=p.oppgaver||[];const groups=groupTasks(tasks);
+  const tasks=p.oppgaver||[];
+  const hast=tasks.filter(t=>t.haster&&!t.evergreen), loop=tasks.filter(t=>t.evergreen), normal=tasks.filter(t=>!t.haster&&!t.evergreen);
+  const groups=groupTasks(normal);
+  const n=hast.length+normal.length;
+  let body='';
+  if(hast.length) body+=`<div class="group haster"><div class="glabel"><span class="badge"><span class="dot" style="--c:var(--danger)"></span>Haster</span></div>${hast.map(t=>taskHTML(t,true)).join('')}</div>`;
+  body+=groups.map(g=>`<div class="group">
+        <div class="glabel"><span class="badge" style="--c:${cvar(CAT,g.k)}"><span class="dot"></span>${esc(g.k)}</span></div>
+        ${g.items.map(t=>taskHTML(t)).join('')}</div>`).join('');
+  if(loop.length) body+=`<div class="group loop"><div class="glabel"><span class="badge">${ICON.loop}Løpende</span></div>${loop.map(t=>taskHTML(t,true)).join('')}</div>`;
   return `<section class="card person${wide?'':' narrow'}">
     <div class="card-h"><div class="avatar">${esc((p.navn||'?')[0])}</div>
-      <div><div class="ttl">${esc(p.navn)}</div><div class="desc">${tasks.length} ${tasks.length===1?'oppgave':'oppgaver'} · ${groups.length} ${groups.length===1?'område':'områder'}</div></div></div>
+      <div><div class="ttl">${esc(p.navn)}</div><div class="desc">${n} ${n===1?'oppgave':'oppgaver'}${loop.length?` · ${loop.length} løpende`:''}</div></div>
+      ${hast.length?`<div class="right"><span class="badge danger"><span class="dot"></span>${hast.length} haster</span></div>`:''}</div>
     <div class="sep-h"></div>
-    <div class="pbody${wide?' wide':''}">${groups.map(g=>`<div class="group">
-        <div class="glabel"><span class="badge" style="--c:${cvar(CAT,g.k)}"><span class="dot"></span>${esc(g.k)}</span></div>
-        ${g.items.map(taskHTML).join('')}</div>`).join('')||'<div class="empty">Ingen oppgaver i dag.</div>'}</div>
+    <div class="pbody${wide?' wide':''}">${body||'<div class="empty">Ingen oppgaver i dag.</div>'}</div>
   </section>`;
 }
 
-function sidePanel(d){
-  const u=d.utleid||[];
+function sidePanel(d,cfg){
+  const u=d.utleid||[]; const showMsg=(cfg||{}).beskjed!==false;
   return `<aside class="side">
-    <section class="card"><div class="card-h"><div><div class="ttl">Utstyr utleid</div><div class="desc">${u.length} ute nå</div></div></div><div class="sep-h"></div>
+    <section class="card${showMsg?'':' grow'}"><div class="card-h"><div><div class="ttl">Utstyr utleid</div><div class="desc">${u.length} ute nå</div></div></div><div class="sep-h"></div>
       <div class="rlist">${u.map(x=>`<div class="ritem"><div class="ic">${ICON.box}</div><div><b>${esc(x.navn)}</b><span>${esc(x.info)}</span></div></div>`).join('')||'<div class="empty" style="padding:16px 0">Ingenting ute nå</div>'}</div></section>
-    <section class="card msg"><div class="card-h"><div><div class="ttl">Beskjed</div></div></div><div class="sep-h"></div><p>${esc(d.beskjed||'')}</p></section>
+    ${showMsg?`<section class="card msg"><div class="card-h"><div><div class="ttl">Beskjed</div></div></div><div class="sep-h"></div><p>${esc(d.beskjed||'')}</p></section>`:''}
   </aside>`;
 }
 
+function weekStart(w){const now=osloNow();let y=now.getFullYear();if(w<isoWeek(now)-1)y++;const j4=new Date(y,0,4);const m=new Date(j4);m.setDate(j4.getDate()-((j4.getDay()+6)%7)+(w-1)*7);return m;}
 function parseD(s){if(!s)return null;const[y,m,dd]=s.slice(0,10).split('-').map(Number);return new Date(y,m-1,dd);}
 const dayKey=d=>`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
 const fmtShort=new Intl.DateTimeFormat('nb-NO',{day:'numeric',month:'short'});
@@ -201,14 +226,14 @@ const fmtDay=new Intl.DateTimeFormat('nb-NO',{weekday:'long',day:'numeric',month
 
 function renderOppdrag(d){
   const today=osloNow();today.setHours(0,0,0,0);
-  const jobs=(d.oppdrag||[]).map(j=>({...j,f:parseD(j.fra),t:parseD(j.til)||parseD(j.fra)}));
+  const jobs=(d.oppdrag||[]).map(j=>{let f=parseD(j.fra),t=parseD(j.til)||f,approx=false;if(!f&&j.uke){f=weekStart(j.uke);t=new Date(f);t.setDate(f.getDate()+4);approx=true;}return{...j,f,t,approx};});
   const dated=jobs.filter(j=>j.f&&j.t>=today).sort((a,b)=>a.f-b.f);
   const undated=jobs.filter(j=>!j.f);
   const days={},order=[];
-  for(const j of dated){const on=j.f<today;const k=on?'pågår':dayKey(j.f);if(!(k in days)){days[k]=[];order.push([k,on?today:j.f]);}days[k].push(j);}
-  const label=(k,dt)=>{if(k==='pågår')return 'Pågår nå';const diff=Math.round((dt-today)/864e5);const s=diff===0?'I dag':diff===1?'I morgen':fmtDay.format(dt);return s[0].toUpperCase()+s.slice(1);};
+  for(const j of dated){const on=j.f<today&&!j.approx;const k=j.approx?'uke'+j.uke:on?'pågår':dayKey(j.f);if(!(k in days)){days[k]=[];order.push([k,on?today:j.f]);}days[k].push(j);}
+  const label=(k,dt)=>{if(k==='pågår')return 'Pågår nå';if(k.startsWith('uke'))return 'Uke '+k.slice(3)+' · dato ikke satt';const diff=Math.round((dt-today)/864e5);const s=diff===0?'I dag':diff===1?'I morgen':fmtDay.format(dt);return s[0].toUpperCase()+s.slice(1);};
   const row=j=>`<div class="job" style="--c:${cvar(TYPE,j.type)}"><div class="bar"></div>
-      <div class="when">${j.f?`<b>${fmtShort.format(j.f)}</b>${j.t&&j.t-j.f?`<br>→ ${fmtShort.format(j.t)}`:''}${j.tid?`<br>${esc(j.tid)}`:''}`:'Ikke satt'}</div>
+      <div class="when">${j.approx?`<b>Uke ${j.uke}</b><br>${fmtShort.format(j.f)} → ${fmtShort.format(j.t)}`:j.f?`<b>${fmtShort.format(j.f)}</b>${j.t&&j.t-j.f?`<br>→ ${fmtShort.format(j.t)}`:''}${j.tid?`<br>${esc(j.tid)}`:''}`:'Ikke satt'}</div>
       <div class="what"><b>${esc(j.tittel)}</b><span>${esc([j.sted,j.info].filter(Boolean).join(' · '))}</span></div>
       <span class="badge" style="--c:${cvar(TYPE,j.type)}"><span class="dot"></span>${esc(j.type||'Oppdrag')}</span></div>`;
   let agenda=order.slice(0,6).map(([k,dt])=>`<div class="aday${k===dayKey(today)?' today':''}"><h4>${esc(label(k,dt))}</h4>${days[k].map(row).join('')}</div>`).join('');
@@ -244,9 +269,9 @@ function render(d){
   document.getElementById('h-badges').innerHTML=`<span class="badge secondary">Uke ${isoWeek(n)}</span>${d.frist&&SCREEN!=='hoyre'?`<span class="badge" style="--c:var(--warning)"><span class="dot"></span>Frist ${esc(d.frist)}</span>`:''}`;
   document.getElementById('f-screen').textContent={venstre:'Skjerm 1 av 3 · Venstre',midt:'Skjerm 2 av 3 · Midt',hoyre:'Skjerm 3 av 3 · Høyre'}[SCREEN]||SCREEN;
   const main=document.getElementById('main');
-  if(SCREEN==='hoyre')main.innerHTML=renderOppdrag(d)+sidePanel(d);
+  if(SCREEN==='hoyre')main.innerHTML=renderOppdrag(d)+sidePanel(d,cfg);
   else{const cols=(cfg.kolonner||[]).map(k=>d.personer?.[k]).filter(Boolean);const wide=cols.length<=2;
-    main.innerHTML=cols.map(p=>personCard(p,wide)).join('')+(cfg.sidepanel?sidePanel(d):'');}
+    main.innerHTML=cols.map(p=>personCard(p,wide)).join('')+(cfg.sidepanel?sidePanel(d,cfg):'');}
   requestAnimationFrame(()=>requestAnimationFrame(autofit));
 }
 

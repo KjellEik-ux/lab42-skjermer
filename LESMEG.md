@@ -6,7 +6,7 @@ Tre skjermer, én side, én datafil:
 |---------|---------------------------------|-------|
 | Venstre | `skjerm.html?skjerm=venstre`    | Andy og Christoph |
 | Midt    | `skjerm.html?skjerm=midt`       | Kristian, Johannes, Annkarin + utstyr utleid og beskjed |
-| Høyre   | `skjerm.html?skjerm=hoyre`      | Kommende oppdrag, 3-ukers kalender, utstyr utleid, beskjed |
+| Høyre   | `skjerm.html?skjerm=hoyre`      | Kommende oppdrag, 3-ukers kalender, utstyr utleid |
 
 Alt innhold ligger i **`data.json`**. Skjermene henter filen på nytt hvert minutt, så når dere endrer den, oppdateres skjermene av seg selv. Ingen ny opplasting i Yodeck.
 
@@ -44,6 +44,8 @@ Valgfrie felt:
 - `"med": ["Andy", "Kristian"]` – hvem man jobber sammen med (vises som brikker)
 - `"notat": "Status uavklart"` – grå brikke
 - `"advarsel": "Bekreft at strømmen er frakoblet først"` – oransje varsel
+- `"haster": true` – havner øverst i en rød «Haster»-boks, og kortet får et rødt merke
+- `"evergreen": true` – løpende oppgave som alltid står nederst under «Løpende» (teller ikke som vanlig oppgave)
 
 Kategorier med egen farge: Lager, Utstyr, Verksted, Lokaler, Transport, Biler, Ekstern/kunde, Felles. Andre navn fungerer også (får standardfarge).
 
@@ -53,7 +55,9 @@ Kategorier med egen farge: Lager, Utstyr, Verksted, Lokaler, Transport, Biler, E
 ```json
 { "tittel": "Rigg Oslo Spektrum", "type": "Rigg", "fra": "2026-11-03", "til": "2026-11-05", "tid": "07:00", "sted": "Oslo", "info": "2 biler" }
 ```
-`type` gir farge: Utleie, Retur, Levering, Rigg, Event, Transport. Uten `fra`-dato havner oppdraget under «Uten dato».
+`type` gir farge: Utleie, Retur, Levering, Rigg, Event, Transport. Uten `fra`-dato havner oppdraget under «Uten dato». Vet du bare uka, bruk `"uke": 46` i stedet for `fra`/`til`.
+
+**Hvor beskjeden vises:** Beskjeden vises bare på skjermer med `"beskjed": true` under `"skjermer"` (nå midtskjermen).
 
 **Beskjed og utleid utstyr:** `"beskjed"` og `"utleid"` øverst/nederst i filen.
 
