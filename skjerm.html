@@ -125,6 +125,16 @@ main{flex:1;display:flex;gap:20px;min-height:0}
 .day.today{border-color:var(--primary);background:rgba(45,212,191,.08)}
 .day.today .n{color:var(--primary)}
 .ev{font-size:13px;font-weight:600;line-height:1.2;padding:4px 7px;border-radius:6px;background:color-mix(in srgb,var(--c,var(--primary)) 18%,transparent);color:var(--c,var(--primary));border-left:3px solid var(--c,var(--primary));overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word}
+.job .chk{grid-column:2/-1;border-top:1px dashed var(--border);padding-top:12px;margin-top:2px;display:grid;grid-template-columns:1fr 1fr;gap:8px 24px}
+.chk-h{grid-column:1/-1;display:flex;align-items:center;gap:12px;font-size:15px;color:var(--muted-foreground)}
+.chk-h .bar2{flex:1;max-width:160px;height:6px;border-radius:9px;background:var(--muted);overflow:hidden}
+.chk-h .bar2 i{display:block;height:100%;background:var(--c,var(--primary))}
+.chk-i{display:flex;align-items:flex-start;gap:10px;font-size:18px;line-height:1.3}
+.chk-i .cb{width:16px;height:16px;margin-top:3px}
+.chk-i.done{color:var(--subtle);text-decoration:line-through}
+.chk-i.done .cb{background:var(--c,var(--primary));border-color:var(--c,var(--primary))}
+.chk-i small{display:block;font-size:14px;color:var(--subtle);text-decoration:none}
+.pchip{font-family:"Geist Mono",ui-monospace,monospace;font-size:.92em;color:var(--primary);border:1px solid rgba(45,212,191,.35);border-radius:6px;padding:0 .45em}
 .undated{padding:0 22px 20px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:15px;color:var(--muted-foreground)}
 
 footer{display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--subtle)}
@@ -156,7 +166,7 @@ const POLL_MS=60*1000;
 
 const CAT={'lager':'--c-lager','utstyr':'--c-utstyr','verksted':'--c-verksted','lokaler':'--c-lokaler','transport':'--c-transport',
   'biler':'--c-biler','ekstern/kunde':'--c-ekstern','ekstern':'--c-ekstern','felles':'--c-felles'};
-const TYPE={'utleie':'--c-utstyr','retur':'--c-verksted','levering':'--c-lager','rigg':'--c-lokaler','event':'--c-ekstern','transport':'--c-transport'};
+const TYPE={'prosjekt':'--primary','utleie':'--c-utstyr','retur':'--c-verksted','levering':'--c-lager','rigg':'--c-lokaler','event':'--c-ekstern','transport':'--c-transport'};
 const cvar=(m,k)=>`var(${m[(k||'').toLowerCase()]||'--primary'})`;
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ICON={
@@ -184,6 +194,7 @@ function taskHTML(t,showCat){
   const meta=[
     showCat&&t.kategori?`<span class="catnote">${esc(t.kategori)}</span>`:'',
     med.length?`<span class="with"><span class="stack">${med.map(m=>`<span>${esc(m[0])}</span>`).join('')}</span>med ${esc(med.join(', ').replace(/, ([^,]*)$/,' og $1'))}</span>`:'',
+    t.prosjekt?`<span class="pchip">${esc(t.prosjekt)}</span>`:'',
     t.notat?`<span class="note">${esc(t.notat)}</span>`:''
   ].filter(Boolean).join('');
   return `<div class="task"><span class="cb"></span><div class="ttext">${esc(t.tekst)}${meta?`<div class="meta">${meta}</div>`:''}${t.advarsel?`<div class="alert">${ICON.alert}${esc(t.advarsel)}</div>`:''}</div></div>`;
@@ -224,19 +235,23 @@ const dayKey=d=>`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
 const fmtShort=new Intl.DateTimeFormat('nb-NO',{day:'numeric',month:'short'});
 const fmtDay=new Intl.DateTimeFormat('nb-NO',{weekday:'long',day:'numeric',month:'long'});
 
+function chk(j){const L=j.sjekkliste||[];if(!L.length)return '';const done=L.filter(x=>x.ferdig).length;
+  return `<div class="chk"><div class="chk-h">Sjekkliste · ${done}/${L.length}<span class="bar2"><i style="width:${Math.round(done/L.length*100)}%"></i></span></div>${L.map(x=>`<div class="chk-i${x.ferdig?' done':''}"><span class="cb"></span><div>${esc(x.tekst)}${x.hvem?`<small>${esc(x.hvem)}</small>`:''}</div></div>`).join('')}</div>`;}
 function renderOppdrag(d){
   const today=osloNow();today.setHours(0,0,0,0);
   const jobs=(d.oppdrag||[]).map(j=>{let f=parseD(j.fra),t=parseD(j.til)||f,approx=false;if(!f&&j.uke){f=weekStart(j.uke);t=new Date(f);t.setDate(f.getDate()+4);approx=true;}return{...j,f,t,approx};});
-  const dated=jobs.filter(j=>j.f&&j.t>=today).sort((a,b)=>a.f-b.f);
-  const undated=jobs.filter(j=>!j.f);
+  const ongoing=jobs.filter(j=>j.pagar);
+  const dated=jobs.filter(j=>!j.pagar&&j.f&&j.t>=today).sort((a,b)=>a.f-b.f);
+  const undated=jobs.filter(j=>!j.pagar&&!j.f);
   const days={},order=[];
   for(const j of dated){const on=j.f<today&&!j.approx;const k=j.approx?'uke'+j.uke:on?'pågår':dayKey(j.f);if(!(k in days)){days[k]=[];order.push([k,on?today:j.f]);}days[k].push(j);}
   const label=(k,dt)=>{if(k==='pågår')return 'Pågår nå';if(k.startsWith('uke'))return 'Uke '+k.slice(3)+' · dato ikke satt';const diff=Math.round((dt-today)/864e5);const s=diff===0?'I dag':diff===1?'I morgen':fmtDay.format(dt);return s[0].toUpperCase()+s.slice(1);};
   const row=j=>`<div class="job" style="--c:${cvar(TYPE,j.type)}"><div class="bar"></div>
-      <div class="when">${j.approx?`<b>Uke ${j.uke}</b><br>${fmtShort.format(j.f)} → ${fmtShort.format(j.t)}`:j.f?`<b>${fmtShort.format(j.f)}</b>${j.t&&j.t-j.f?`<br>→ ${fmtShort.format(j.t)}`:''}${j.tid?`<br>${esc(j.tid)}`:''}`:'Ikke satt'}</div>
+      <div class="when">${j.nr?`<b>${esc(j.nr)}</b>${j.f?`<br>${fmtShort.format(j.f)}${j.t&&j.t-j.f?` → ${fmtShort.format(j.t)}`:''}`:'<br>Pågår'}`:j.pagar&&!j.f?'<b>Pågår</b>':j.approx?`<b>Uke ${j.uke}</b><br>${fmtShort.format(j.f)} → ${fmtShort.format(j.t)}`:j.f?`<b>${fmtShort.format(j.f)}</b>${j.t&&j.t-j.f?`<br>→ ${fmtShort.format(j.t)}`:''}${j.tid?`<br>${esc(j.tid)}`:''}`:'Ikke satt'}</div>
       <div class="what"><b>${esc(j.tittel)}</b><span>${esc([j.sted,j.info].filter(Boolean).join(' · '))}</span></div>
-      <span class="badge" style="--c:${cvar(TYPE,j.type)}"><span class="dot"></span>${esc(j.type||'Oppdrag')}</span></div>`;
-  let agenda=order.slice(0,6).map(([k,dt])=>`<div class="aday${k===dayKey(today)?' today':''}"><h4>${esc(label(k,dt))}</h4>${days[k].map(row).join('')}</div>`).join('');
+      <span class="badge" style="--c:${cvar(TYPE,j.type)}"><span class="dot"></span>${esc(j.type||'Oppdrag')}</span>${chk(j)}</div>`;
+  let agenda=ongoing.length?`<div class="aday today"><h4>Pågår nå</h4>${ongoing.map(row).join('')}</div>`:'';
+  agenda+=order.slice(0,6).map(([k,dt])=>`<div class="aday${k===dayKey(today)?' today':''}"><h4>${esc(label(k,dt))}</h4>${days[k].map(row).join('')}</div>`).join('');
   if(undated.length)agenda+=`<div class="aday"><h4>Uten dato</h4>${undated.map(row).join('')}</div>`;
   if(!agenda)agenda='<div class="empty" style="padding-top:20px;font-size:20px">Ingen kommende oppdrag lagt inn.</div>';
 
@@ -247,7 +262,7 @@ function renderOppdrag(d){
     cells+=`<div class="day${dt<today?' past':''}${+dt===+today?' today':''}"><div class="n">${dt.getDate()}${dt.getDate()===1||i===0?`<small>${fmtShort.format(dt).replace(/^\d+\.?\s*/,'')}</small>`:''}</div>
       ${evs.slice(0,3).map(j=>`<div class="ev" style="--c:${cvar(TYPE,j.type)}">${esc(j.tittel)}</div>`).join('')}${evs.length>3?`<div class="ev">+${evs.length-3}</div>`:''}</div>`;}
 
-  return `<section class="card agenda"><div class="card-h"><div><div class="ttl">Kommende oppdrag</div><div class="desc">${dated.length+undated.length} oppdrag</div></div></div><div class="sep-h"></div><div class="alist">${agenda}</div></section>
+  return `<section class="card agenda"><div class="card-h"><div><div class="ttl">Prosjekter og oppdrag</div><div class="desc">${ongoing.length} pågår · ${dated.length+undated.length} kommende</div></div></div><div class="sep-h"></div><div class="alist">${agenda}</div></section>
     <section class="card cal"><div class="card-h"><div><div class="ttl">Kalender</div><div class="desc">Neste tre uker</div></div></div><div class="sep-h"></div><div class="grid">${cells}</div>
       ${undated.length?`<div class="undated">Uten dato: ${undated.map(j=>`<span class="badge" style="--c:${cvar(TYPE,j.type)}"><span class="dot"></span>${esc(j.tittel)}</span>`).join('')}</div>`:''}</section>`;
 }

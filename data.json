@@ -1,12 +1,12 @@
 {
-  "oppdatert": "2026-11-02T08:20",
+  "oppdatert": "2026-11-02T08:40",
   "undertittel": "Lager og verksted",
   "beskjed": "Ha en fin dag!",
 
   "skjermer": {
     "venstre": { "tittel": "Gjøreliste", "kolonner": ["andy", "christoph"] },
-    "midt":    { "tittel": "Gjøreliste", "kolonner": ["kristian", "johannes", "annkarin"], "sidepanel": true, "beskjed": true },
-    "hoyre":   { "tittel": "Kommende oppdrag", "beskjed": false }
+    "midt": { "tittel": "Gjøreliste", "kolonner": ["kristian", "johannes", "annkarin"], "sidepanel": true, "beskjed": true },
+    "hoyre": { "tittel": "Oppdrag", "beskjed": false }
   },
 
   "personer": {
@@ -20,7 +20,7 @@
         { "kategori": "Lokaler", "tekst": "Vurder riving ved Uttrykk", "med": ["Christoph"] },
         { "kategori": "Lokaler", "tekst": "Demonter vifte", "advarsel": "Bekreft at strømmen er frakoblet først" },
         { "kategori": "Transport", "tekst": "Tøm siste 40-fotscontainer i Drammen", "med": ["Kristian", "Christoph"] },
-        { "kategori": "Transport", "tekst": "Hente bordunderstell fra pulverlakk", "med": ["Christoph", "Johannes"] },
+        { "kategori": "Transport", "tekst": "Hente bordunderstell fra pulverlakk", "med": ["Christoph", "Johannes"], "prosjekt": "LAB-26-001" },
         { "kategori": "Ekstern/kunde", "tekst": "Avtal befaring med Dag", "med": ["Christoph"] },
         { "kategori": "Verksted", "tekst": "Lag dollyer ved behov og tid", "med": ["Kristian", "Christoph"], "evergreen": true }
       ]
@@ -36,7 +36,7 @@
         { "kategori": "Verksted", "tekst": "Produsere bord", "med": ["Andy", "Kristian"] },
         { "kategori": "Lokaler", "tekst": "Vurder riving ved Uttrykk", "med": ["Andy"] },
         { "kategori": "Transport", "tekst": "Tøm siste 40-fotscontainer i Drammen", "med": ["Andy", "Kristian"] },
-        { "kategori": "Transport", "tekst": "Hente bordunderstell fra pulverlakk", "med": ["Andy", "Johannes"] },
+        { "kategori": "Transport", "tekst": "Hente bordunderstell fra pulverlakk", "med": ["Andy", "Johannes"], "prosjekt": "LAB-26-001" },
         { "kategori": "Biler", "tekst": "Dekkbytte Crafter/Maxus hos Møller Bil", "med": ["Johannes"] },
         { "kategori": "Ekstern/kunde", "tekst": "Avtal befaring med Dag", "med": ["Andy"] },
         { "kategori": "Verksted", "tekst": "Lag dollyer ved behov og tid", "med": ["Andy", "Kristian"], "evergreen": true }
@@ -56,7 +56,7 @@
       "oppgaver": [
         { "kategori": "Utstyr", "tekst": "Merk/registrer utstyr i Rentman", "med": ["Isak"] },
         { "kategori": "Lager", "tekst": "Rydde og sortere 2. etasje", "med": ["Christoph", "Annkarin"] },
-        { "kategori": "Transport", "tekst": "Hente bordunderstell fra pulverlakk", "med": ["Andy", "Christoph"] },
+        { "kategori": "Transport", "tekst": "Hente bordunderstell fra pulverlakk", "med": ["Andy", "Christoph"], "prosjekt": "LAB-26-001" },
         { "kategori": "Biler", "tekst": "Dekkbytte Crafter/Maxus hos Møller Bil", "med": ["Christoph"] },
         { "kategori": "Felles", "tekst": "Still inn kaffemaskinen" }
       ]
@@ -74,7 +74,13 @@
   ],
 
   "oppdrag": [
-    { "tittel": "Sa_G", "type": "Utleie", "uke": 46, "info": "Går ut neste uke – dato ikke satt" },
-    { "tittel": "Skal vi danse", "type": "Utleie", "fra": null, "til": null, "info": "Pågår – sluttdato ikke oppgitt" }
+    { "tittel": "Onkel Blaa", "nr": "LAB-26-001", "type": "Prosjekt", "pagar": true, "sjekkliste": [
+      { "tekst": "Hente bordunderstell fra pulverlakk", "hvem": "Andy, Christoph, Johannes", "ferdig": false },
+      { "tekst": "Hente bord «Onkel Blaa»", "ferdig": false },
+      { "tekst": "Hente bordplate", "ferdig": false },
+      { "tekst": "Lakkere bord", "ferdig": false }
+    ] },
+    { "tittel": "Skal vi danse", "type": "Utleie", "pagar": true, "info": "Utleid – sluttdato ikke oppgitt" },
+    { "tittel": "Sa_G", "type": "Utleie", "uke": 46, "info": "Går ut neste uke – dato ikke satt" }
   ]
 }

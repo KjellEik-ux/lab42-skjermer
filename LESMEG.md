@@ -6,7 +6,7 @@ Tre skjermer, én side, én datafil:
 |---------|---------------------------------|-------|
 | Venstre | `skjerm.html?skjerm=venstre`    | Andy og Christoph |
 | Midt    | `skjerm.html?skjerm=midt`       | Kristian, Johannes, Annkarin + utstyr utleid og beskjed |
-| Høyre   | `skjerm.html?skjerm=hoyre`      | Kommende oppdrag, 3-ukers kalender, utstyr utleid |
+| Høyre   | `skjerm.html?skjerm=hoyre`      | Oppdrag: pågående prosjekter med sjekkliste, kommende oppdrag, 3-ukers kalender, utstyr utleid |
 
 Alt innhold ligger i **`data.json`**. Skjermene henter filen på nytt hvert minutt, så når dere endrer den, oppdateres skjermene av seg selv. Ingen ny opplasting i Yodeck.
 
@@ -56,6 +56,17 @@ Kategorier med egen farge: Lager, Utstyr, Verksted, Lokaler, Transport, Biler, E
 { "tittel": "Rigg Oslo Spektrum", "type": "Rigg", "fra": "2026-11-03", "til": "2026-11-05", "tid": "07:00", "sted": "Oslo", "info": "2 biler" }
 ```
 `type` gir farge: Utleie, Retur, Levering, Rigg, Event, Transport. Uten `fra`-dato havner oppdraget under «Uten dato». Vet du bare uka, bruk `"uke": 46` i stedet for `fra`/`til`.
+
+**Prosjekt med sjekkliste** (høyre skjerm, under «Pågår nå»):
+```json
+{ "tittel": "Onkel Blaa", "nr": "LAB-26-001", "type": "Prosjekt", "pagar": true,
+  "sjekkliste": [
+    { "tekst": "Hente bordplate", "hvem": "Andy", "ferdig": false },
+    { "tekst": "Lakkere bord", "ferdig": true }
+  ] }
+```
+Sett `"ferdig": true` når et punkt er gjort, da strekes det over og fremdriftslinjen fylles. `"pagar": true` legger oppdraget øverst under «Pågår nå» (gjelder også utleie som er ute).
+Vil du knytte en personoppgave til prosjektet, legg til `"prosjekt": "LAB-26-001"` på oppgaven, så får den en liten prosjektmerkelapp.
 
 **Hvor beskjeden vises:** Beskjeden vises bare på skjermer med `"beskjed": true` under `"skjermer"` (nå midtskjermen).
 
