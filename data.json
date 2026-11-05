@@ -1,86 +1,347 @@
 {
-  "oppdatert": "2026-11-02T08:40",
+  "oppdatert": "2026-11-05T09:45",
   "undertittel": "Lager og verksted",
   "beskjed": "Ha en fin dag!",
-
   "skjermer": {
-    "venstre": { "tittel": "Gjøreliste", "kolonner": ["andy", "christoph"] },
-    "midt": { "tittel": "Gjøreliste", "kolonner": ["kristian", "johannes", "annkarin"], "sidepanel": true, "beskjed": true },
-    "hoyre": { "tittel": "Oppdrag", "beskjed": false }
+    "venstre": {
+      "tittel": "Gjøreliste",
+      "kolonner": [
+        "andy",
+        "christoph"
+      ]
+    },
+    "midt": {
+      "tittel": "Gjøreliste",
+      "kolonner": [
+        "kristian",
+        "johannes",
+        "annkarin"
+      ],
+      "sidepanel": true,
+      "beskjed": true
+    },
+    "hoyre": {
+      "tittel": "Oppdrag",
+      "beskjed": false
+    }
   },
-
   "personer": {
     "andy": {
       "navn": "Andy",
       "oppgaver": [
-        { "kategori": "Ekstern/kunde", "tekst": "Gjerde til FirstAudio", "med": ["Christoph", "Kristian"], "haster": true },
-        { "kategori": "Lager", "tekst": "Reoler ved ventilasjon – rydd gangen før utstyr plasseres" },
-        { "kategori": "Utstyr", "tekst": "Fikse gulvvasker" },
-        { "kategori": "Verksted", "tekst": "Produsere bord", "med": ["Kristian", "Christoph"] },
-        { "kategori": "Lokaler", "tekst": "Vurder riving ved Uttrykk", "med": ["Christoph"] },
-        { "kategori": "Lokaler", "tekst": "Demonter vifte", "advarsel": "Bekreft at strømmen er frakoblet først" },
-        { "kategori": "Transport", "tekst": "Tøm siste 40-fotscontainer i Drammen", "med": ["Kristian", "Christoph"] },
-        { "kategori": "Transport", "tekst": "Hente bordunderstell fra pulverlakk", "med": ["Christoph", "Johannes"], "prosjekt": "LAB-26-001" },
-        { "kategori": "Ekstern/kunde", "tekst": "Avtal befaring med Dag", "med": ["Christoph"] },
-        { "kategori": "Verksted", "tekst": "Lag dollyer ved behov og tid", "med": ["Kristian", "Christoph"], "evergreen": true }
+        {
+          "kategori": "Ekstern/kunde",
+          "tekst": "Gjerde til FirstAudio",
+          "med": [
+            "Christoph",
+            "Kristian"
+          ],
+          "haster": true
+        },
+        {
+          "kategori": "Lager",
+          "tekst": "Reoler ved ventilasjon – rydd gangen før utstyr plasseres"
+        },
+        {
+          "kategori": "Utstyr",
+          "tekst": "Fikse gulvvasker"
+        },
+        {
+          "kategori": "Verksted",
+          "tekst": "Produsere bord",
+          "med": [
+            "Kristian",
+            "Christoph"
+          ]
+        },
+        {
+          "kategori": "Lokaler",
+          "tekst": "Vurder riving ved Uttrykk",
+          "med": [
+            "Christoph"
+          ]
+        },
+        {
+          "kategori": "Lokaler",
+          "tekst": "Demonter vifte",
+          "advarsel": "Bekreft at strømmen er frakoblet først"
+        },
+        {
+          "kategori": "Transport",
+          "tekst": "Tøm siste 40-fotscontainer i Drammen",
+          "med": [
+            "Kristian",
+            "Christoph"
+          ]
+        },
+        {
+          "kategori": "Transport",
+          "tekst": "Hente bordunderstell fra pulverlakk",
+          "med": [
+            "Christoph",
+            "Johannes"
+          ],
+          "prosjekt": "LAB-26-001"
+        },
+        {
+          "kategori": "Ekstern/kunde",
+          "tekst": "Avtal befaring med Dag",
+          "med": [
+            "Christoph"
+          ]
+        },
+        {
+          "kategori": "Verksted",
+          "tekst": "Lag dollyer ved behov og tid",
+          "med": [
+            "Kristian",
+            "Christoph"
+          ],
+          "evergreen": true
+        }
       ]
     },
     "christoph": {
       "navn": "Christoph",
       "oppgaver": [
-        { "kategori": "Ekstern/kunde", "tekst": "Gjerde til FirstAudio", "med": ["Andy", "Kristian"], "haster": true },
-        { "kategori": "Lager", "tekst": "Rydde og sortere 2. etasje", "med": ["Annkarin", "Johannes"] },
-        { "kategori": "Lager", "tekst": "Fjern fremmed utstyr, avklar dekk", "med": ["Isak"], "notat": "Delvis gjort" },
-        { "kategori": "Utstyr", "tekst": "Gjennomgå: behold, selg eller ta ut", "med": ["Isak"] },
-        { "kategori": "Utstyr", "tekst": "Finn misplassert stiftepistol – test på restmateriale når funnet" },
-        { "kategori": "Verksted", "tekst": "Produsere bord", "med": ["Andy", "Kristian"] },
-        { "kategori": "Lokaler", "tekst": "Vurder riving ved Uttrykk", "med": ["Andy"] },
-        { "kategori": "Transport", "tekst": "Tøm siste 40-fotscontainer i Drammen", "med": ["Andy", "Kristian"] },
-        { "kategori": "Transport", "tekst": "Hente bordunderstell fra pulverlakk", "med": ["Andy", "Johannes"], "prosjekt": "LAB-26-001" },
-        { "kategori": "Biler", "tekst": "Dekkbytte Crafter/Maxus hos Møller Bil", "med": ["Johannes"] },
-        { "kategori": "Ekstern/kunde", "tekst": "Avtal befaring med Dag", "med": ["Andy"] },
-        { "kategori": "Verksted", "tekst": "Lag dollyer ved behov og tid", "med": ["Andy", "Kristian"], "evergreen": true }
+        {
+          "kategori": "Ekstern/kunde",
+          "tekst": "Gjerde til FirstAudio",
+          "med": [
+            "Andy",
+            "Kristian"
+          ],
+          "haster": true
+        },
+        {
+          "kategori": "Lager",
+          "tekst": "Rydde og sortere 2. etasje",
+          "med": [
+            "Annkarin",
+            "Johannes"
+          ]
+        },
+        {
+          "kategori": "Lager",
+          "tekst": "Fjern fremmed utstyr, avklar dekk",
+          "med": [
+            "Isak"
+          ],
+          "notat": "Delvis gjort"
+        },
+        {
+          "kategori": "Utstyr",
+          "tekst": "Gjennomgå: behold, selg eller ta ut",
+          "med": [
+            "Isak"
+          ]
+        },
+        {
+          "kategori": "Utstyr",
+          "tekst": "Finn misplassert stiftepistol – test på restmateriale når funnet"
+        },
+        {
+          "kategori": "Verksted",
+          "tekst": "Produsere bord",
+          "med": [
+            "Andy",
+            "Kristian"
+          ]
+        },
+        {
+          "kategori": "Lokaler",
+          "tekst": "Vurder riving ved Uttrykk",
+          "med": [
+            "Andy"
+          ]
+        },
+        {
+          "kategori": "Transport",
+          "tekst": "Tøm siste 40-fotscontainer i Drammen",
+          "med": [
+            "Andy",
+            "Kristian"
+          ]
+        },
+        {
+          "kategori": "Transport",
+          "tekst": "Hente bordunderstell fra pulverlakk",
+          "med": [
+            "Andy",
+            "Johannes"
+          ],
+          "prosjekt": "LAB-26-001"
+        },
+        {
+          "kategori": "Biler",
+          "tekst": "Dekkbytte Crafter/Maxus hos Møller Bil",
+          "med": [
+            "Johannes"
+          ]
+        },
+        {
+          "kategori": "Ekstern/kunde",
+          "tekst": "Avtal befaring med Dag",
+          "med": [
+            "Andy"
+          ]
+        },
+        {
+          "kategori": "Verksted",
+          "tekst": "Lag dollyer ved behov og tid",
+          "med": [
+            "Andy",
+            "Kristian"
+          ],
+          "evergreen": true
+        }
       ]
     },
     "kristian": {
       "navn": "Kristian",
       "oppgaver": [
-        { "kategori": "Ekstern/kunde", "tekst": "Gjerde til FirstAudio", "med": ["Andy", "Christoph"], "haster": true },
-        { "kategori": "Verksted", "tekst": "Produsere bord", "med": ["Andy", "Christoph"] },
-        { "kategori": "Transport", "tekst": "Tøm siste 40-fotscontainer i Drammen", "med": ["Andy", "Christoph"] },
-        { "kategori": "Verksted", "tekst": "Lag dollyer ved behov og tid", "med": ["Andy", "Christoph"], "evergreen": true }
+        {
+          "kategori": "Ekstern/kunde",
+          "tekst": "Gjerde til FirstAudio",
+          "med": [
+            "Andy",
+            "Christoph"
+          ],
+          "haster": true
+        },
+        {
+          "kategori": "Verksted",
+          "tekst": "Produsere bord",
+          "med": [
+            "Andy",
+            "Christoph"
+          ]
+        },
+        {
+          "kategori": "Transport",
+          "tekst": "Tøm siste 40-fotscontainer i Drammen",
+          "med": [
+            "Andy",
+            "Christoph"
+          ]
+        },
+        {
+          "kategori": "Verksted",
+          "tekst": "Lag dollyer ved behov og tid",
+          "med": [
+            "Andy",
+            "Christoph"
+          ],
+          "evergreen": true
+        }
       ]
     },
     "johannes": {
       "navn": "Johannes",
       "oppgaver": [
-        { "kategori": "Utstyr", "tekst": "Merk/registrer utstyr i Rentman", "med": ["Isak"] },
-        { "kategori": "Lager", "tekst": "Rydde og sortere 2. etasje", "med": ["Christoph", "Annkarin"] },
-        { "kategori": "Transport", "tekst": "Hente bordunderstell fra pulverlakk", "med": ["Andy", "Christoph"], "prosjekt": "LAB-26-001" },
-        { "kategori": "Biler", "tekst": "Dekkbytte Crafter/Maxus hos Møller Bil", "med": ["Christoph"] },
-        { "kategori": "Felles", "tekst": "Still inn kaffemaskinen" }
+        {
+          "kategori": "Utstyr",
+          "tekst": "Merk/registrer utstyr i Rentman",
+          "med": [
+            "Isak"
+          ]
+        },
+        {
+          "kategori": "Lager",
+          "tekst": "Rydde og sortere 2. etasje",
+          "med": [
+            "Christoph",
+            "Annkarin"
+          ]
+        },
+        {
+          "kategori": "Transport",
+          "tekst": "Hente bordunderstell fra pulverlakk",
+          "med": [
+            "Andy",
+            "Christoph"
+          ],
+          "prosjekt": "LAB-26-001"
+        },
+        {
+          "kategori": "Biler",
+          "tekst": "Dekkbytte Crafter/Maxus hos Møller Bil",
+          "med": [
+            "Christoph"
+          ]
+        },
+        {
+          "kategori": "Felles",
+          "tekst": "Still inn kaffemaskinen"
+        }
       ]
     },
     "annkarin": {
       "navn": "Annkarin",
       "oppgaver": [
-        { "kategori": "Lager", "tekst": "Rydde og sortere 2. etasje", "med": ["Christoph", "Johannes"] }
+        {
+          "kategori": "Lager",
+          "tekst": "Rydde og sortere 2. etasje",
+          "med": [
+            "Christoph",
+            "Johannes"
+          ]
+        }
       ]
     }
   },
-
   "utleid": [
-    { "navn": "Skal vi danse", "info": "Sluttdato ikke oppgitt" }
+    {
+      "navn": "Skal vi danse",
+      "info": "Sluttdato ikke oppgitt"
+    }
   ],
-
   "oppdrag": [
-    { "tittel": "Onkel Blaa", "nr": "LAB-26-001", "type": "Prosjekt", "pagar": true, "sjekkliste": [
-      { "tekst": "Hente bordunderstell fra pulverlakk", "hvem": "Andy, Christoph, Johannes", "ferdig": false },
-      { "tekst": "Hente bord «Onkel Blaa»", "ferdig": false },
-      { "tekst": "Hente bordplate", "ferdig": false },
-      { "tekst": "Lakkere bord", "ferdig": false }
-    ] },
-    { "tittel": "Skal vi danse", "type": "Utleie", "pagar": true, "info": "Utleid – sluttdato ikke oppgitt" },
-    { "tittel": "Sa_G", "type": "Utleie", "uke": 46, "info": "Går ut neste uke – dato ikke satt" }
+    {
+      "tittel": "Onkel Blaa",
+      "nr": "LAB-26-001",
+      "type": "Prosjekt",
+      "pagar": true,
+      "sjekkliste": [
+        {
+          "tekst": "Hente bordunderstell fra pulverlakk",
+          "hvem": "Andy, Christoph, Johannes",
+          "ferdig": false
+        },
+        {
+          "tekst": "Hente bord «Onkel Blaa»",
+          "ferdig": false
+        },
+        {
+          "tekst": "Hente bordplate",
+          "ferdig": false
+        },
+        {
+          "tekst": "Lakkere bord",
+          "ferdig": false
+        }
+      ]
+    },
+    {
+      "tittel": "Skal vi danse",
+      "type": "Utleie",
+      "pagar": true,
+      "info": "Utleid – sluttdato ikke oppgitt"
+    },
+    {
+      "tittel": "Sa_G",
+      "type": "Utleie",
+      "uke": 46,
+      "info": "Går ut neste uke – dato ikke satt"
+    },
+    {
+      "tittel": "OSV-26-003 ODV – Utbedring av rekkverk",
+      "type": "Prosjekt",
+      "fra": "2026-11-09",
+      "til": "2026-11-09",
+      "tid": "09:00",
+      "sted": "Ole Deviks vei 6",
+      "info": "Kontakt: Håkon Myhre Hansen, 932 66 310"
+    }
   ]
 }
