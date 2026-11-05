@@ -1,5 +1,5 @@
 {
-  "oppdatert": "2026-11-05T09:55",
+  "oppdatert": "2026-11-05T10:00",
   "undertittel": "Lager og verksted",
   "beskjed": "Ha en fin dag!",
   "skjermer": {
@@ -278,11 +278,12 @@
   "utleid": [
     {
       "navn": "Skal vi danse",
-      "info": "Sluttdato ikke oppgitt"
+      "til": "2026-12-17"
     },
     {
       "navn": "Sa_G",
-      "info": "Går ut neste uke – dato ikke satt"
+      "info": "Går ut uke 46 – dato ikke satt",
+      "uke": 46
     }
   ],
   "oppdrag": [

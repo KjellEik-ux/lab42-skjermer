@@ -16,7 +16,7 @@
   --warning:#f59e0b; --danger:#ef4444;
   --radius:12px;
   --c-lager:#2dd4bf; --c-utstyr:#3b82f6; --c-verksted:#f59e0b; --c-lokaler:#a855f7;
-  --c-transport:#6366f1; --c-lab:#2dd4bf; --c-osv:#f97316; --c-biler:#84cc16; --c-ekstern:#ec4899; --c-felles:#a1a1aa;
+  --c-transport:#6366f1; --c-lab:#2dd4bf; --c-osv:#f97316; --c-utleie:#3b82f6; --c-biler:#84cc16; --c-ekstern:#ec4899; --c-felles:#a1a1aa;
   --fs:22px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -174,7 +174,7 @@ const cvar=(m,k)=>`var(${m[(k||'').toLowerCase()]||'--primary'})`;
 // Firma ut fra jobbkoden: LAB-… = LAB42, OSV-… = Oslo Sveiseverksted
 const firm=j=>{const n=String(j.nr||'').toUpperCase();return n.startsWith('OSV')?'osv':n.startsWith('LAB')?'lab':null;};
 const FIRM_NAME={lab:'LAB42',osv:'OSV'};
-const jcol=j=>firm(j)?`var(--c-${firm(j)})`:cvar(TYPE,j.type);
+const jcol=j=>j.utleie?'var(--c-utleie)':firm(j)?`var(--c-${firm(j)})`:cvar(TYPE,j.type);
 const isUtleie=j=>(j.type||'').toLowerCase()==='utleie';
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ICON={
@@ -229,7 +229,7 @@ function personCard(p,wide){
 }
 
 function sidePanel(d,cfg){
-  const u=[...(d.utleid||[]),...(d.oppdrag||[]).filter(isUtleie).map(j=>({navn:j.tittel,info:j.info||(j.uke?'Uke '+j.uke:j.fra||'')}))]; const showMsg=(cfg||{}).beskjed!==false;
+  const u=utleieListe(d).map(x=>({navn:x.navn,info:utleieInfo(x)})); const showMsg=(cfg||{}).beskjed!==false;
   return `<aside class="side">
     <section class="card${showMsg?'':' grow'}"><div class="card-h"><div><div class="ttl">Utleie</div><div class="desc">${u.length} ${u.length===1?'utleie':'utleier'}</div></div></div><div class="sep-h"></div>
       <div class="rlist">${u.map(x=>`<div class="ritem"><div class="ic">${ICON.box}</div><div><b>${esc(x.navn)}</b><span>${esc(x.info)}</span></div></div>`).join('')||'<div class="empty" style="padding:16px 0">Ingenting ute nå</div>'}</div></section>
@@ -237,6 +237,9 @@ function sidePanel(d,cfg){
   </aside>`;
 }
 
+// Alt utleie: "utleid" + eventuelle oppdrag med type Utleie. Felt: navn/tittel, fra, til, uke, info
+function utleieListe(d){return [...(d.utleid||[]).map(u=>({...u,tittel:u.navn})),...(d.oppdrag||[]).filter(isUtleie).map(j=>({...j,navn:j.tittel}))];}
+function utleieInfo(u){if(u.info)return u.info;const t=parseD(u.til);if(t)return 'Ute til '+fmtShort.format(t);if(u.uke)return 'Uke '+u.uke;return '';}
 function weekStart(w){const now=osloNow();let y=now.getFullYear();if(w<isoWeek(now)-1)y++;const j4=new Date(y,0,4);const m=new Date(j4);m.setDate(j4.getDate()-((j4.getDay()+6)%7)+(w-1)*7);return m;}
 function parseD(s){if(!s)return null;const[y,m,dd]=s.slice(0,10).split('-').map(Number);return new Date(y,m-1,dd);}
 const dayKey=d=>`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
@@ -264,15 +267,18 @@ function renderOppdrag(d){
   if(undated.length)agenda+=`<div class="aday"><h4>Uten dato</h4>${undated.map(row).join('')}</div>`;
   if(!agenda)agenda='<div class="empty" style="padding-top:20px;font-size:20px">Ingen kommende oppdrag lagt inn.</div>';
 
+  // Utleie i kalenderen: uten fra-dato men med til-dato regnes som ute fra i dag
+  const utl=utleieListe(d).map(u=>{let f=parseD(u.fra),t=parseD(u.til);if(!f&&u.uke){f=weekStart(u.uke);t=t||new Date(f.getFullYear(),f.getMonth(),f.getDate()+4);}if(!f&&t)f=today;return{...u,utleie:true,f,t:t||f};}).filter(u=>u.f);
+  const calJobs=[...jobs,...utl];
   const start=new Date(today);start.setDate(start.getDate()-((start.getDay()+6)%7));
   let cells=['Ma','Ti','On','To','Fr','Lø','Sø'].map(x=>`<div class="dow">${x}</div>`).join('');
   for(let i=0;i<21;i++){const dt=new Date(start);dt.setDate(start.getDate()+i);
-    const evs=jobs.filter(j=>j.f&&dt>=j.f&&dt<=j.t);
+    const evs=calJobs.filter(j=>j.f&&dt>=j.f&&dt<=j.t);
     cells+=`<div class="day${dt<today?' past':''}${+dt===+today?' today':''}"><div class="n">${dt.getDate()}${dt.getDate()===1||i===0?`<small>${fmtShort.format(dt).replace(/^\d+\.?\s*/,'')}</small>`:''}</div>
       ${evs.slice(0,3).map(j=>`<div class="ev" style="--c:${jcol(j)}">${j.nr?`<b>${esc(j.nr)}</b>`:''}<span>${esc(j.tittel)}</span></div>`).join('')}${evs.length>3?`<div class="ev">+${evs.length-3}</div>`:''}</div>`;}
 
   return `<section class="card agenda"><div class="card-h"><div><div class="ttl">Oppdrag</div><div class="desc">${ongoing.length} pågår · ${dated.length+undated.length} kommende</div></div></div><div class="sep-h"></div><div class="alist">${agenda}</div></section>
-    <section class="card cal"><div class="card-h"><div><div class="ttl">Kalender</div><div class="desc">Neste tre uker</div></div><div class="legend"><span class="badge" style="--c:var(--c-lab)"><span class="dot"></span>LAB42</span><span class="badge" style="--c:var(--c-osv)"><span class="dot"></span>OSV</span></div></div><div class="sep-h"></div><div class="grid">${cells}</div>
+    <section class="card cal"><div class="card-h"><div><div class="ttl">Kalender</div><div class="desc">Neste tre uker</div></div><div class="legend"><span class="badge" style="--c:var(--c-lab)"><span class="dot"></span>LAB42</span><span class="badge" style="--c:var(--c-osv)"><span class="dot"></span>OSV</span><span class="badge" style="--c:var(--c-utleie)"><span class="dot"></span>Utleie</span></div></div><div class="sep-h"></div><div class="grid">${cells}</div>
       ${undated.length?`<div class="undated">Uten dato: ${undated.map(j=>`<span class="badge" style="--c:${jcol(j)}"><span class="dot"></span>${esc(j.tittel)}</span>`).join('')}</div>`:''}</section>`;
 }
 

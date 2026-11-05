@@ -57,7 +57,7 @@ Kategorier med egen farge: Lager, Utstyr, Verksted, Lokaler, Transport, Biler, E
 ```
 Bruk `"nr"` med jobbkoden (f.eks. `"OSV-26-003"`) – den vises over datoen og tidspunktet, og bestemmer fargen: **LAB-… = turkis (LAB42)**, **OSV-… = oransje (Oslo Sveiseverksted)**. Uten `nr` gir `type` farge: Retur, Levering, Rigg, Event, Transport.
 
-**Utleie** legges i `"utleid"` (vises i boksen «Utleie»), ikke i `"oppdrag"`. Oppdrag med `"type": "Utleie"` flyttes dit automatisk og vises ikke under «Oppdrag» eller i kalenderen. Uten `fra`-dato havner oppdraget under «Uten dato». Vet du bare uka, bruk `"uke": 46` i stedet for `fra`/`til`.
+**Utleie** legges i `"utleid"`, f.eks. `{ "navn": "Skal vi danse", "til": "2026-12-17" }`. Det vises i boksen «Utleie» og i blått i kalenderen. Bruk `"fra"`/`"til"` eller `"uke"`; uten `"fra"` regnes det som ute fra i dag. Oppdrag med `"type": "Utleie"` flyttes dit automatisk og vises ikke under «Oppdrag» eller i kalenderen. Uten `fra`-dato havner oppdraget under «Uten dato». Vet du bare uka, bruk `"uke": 46` i stedet for `fra`/`til`.
 
 **Prosjekt med sjekkliste** (høyre skjerm, under «Pågår nå»):
 ```json
