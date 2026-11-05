@@ -1,5 +1,5 @@
 {
-  "oppdatert": "2026-11-05T09:45",
+  "oppdatert": "2026-11-05T09:55",
   "undertittel": "Lager og verksted",
   "beskjed": "Ha en fin dag!",
   "skjermer": {
@@ -29,6 +29,13 @@
     "andy": {
       "navn": "Andy",
       "oppgaver": [
+        {
+          "kategori": "Verksted",
+          "tekst": "Montere nye bein på bordene – Onkel Blå",
+          "notat": "I dag · kontakt Nico 455 68 808",
+          "prosjekt": "LAB-26-001",
+          "haster": true
+        },
         {
           "kategori": "Ekstern/kunde",
           "tekst": "Gjerde til FirstAudio",
@@ -73,15 +80,6 @@
             "Kristian",
             "Christoph"
           ]
-        },
-        {
-          "kategori": "Transport",
-          "tekst": "Hente bordunderstell fra pulverlakk",
-          "med": [
-            "Christoph",
-            "Johannes"
-          ],
-          "prosjekt": "LAB-26-001"
         },
         {
           "kategori": "Ekstern/kunde",
@@ -164,15 +162,6 @@
           ]
         },
         {
-          "kategori": "Transport",
-          "tekst": "Hente bordunderstell fra pulverlakk",
-          "med": [
-            "Andy",
-            "Johannes"
-          ],
-          "prosjekt": "LAB-26-001"
-        },
-        {
           "kategori": "Biler",
           "tekst": "Dekkbytte Crafter/Maxus hos Møller Bil",
           "med": [
@@ -194,6 +183,11 @@
             "Kristian"
           ],
           "evergreen": true
+        },
+        {
+          "kategori": "Ekstern/kunde",
+          "tekst": "Prise tilleggsbestilling – langt barbord (Onkel Blå)",
+          "prosjekt": "LAB-26-001"
         }
       ]
     },
@@ -255,15 +249,6 @@
           ]
         },
         {
-          "kategori": "Transport",
-          "tekst": "Hente bordunderstell fra pulverlakk",
-          "med": [
-            "Andy",
-            "Christoph"
-          ],
-          "prosjekt": "LAB-26-001"
-        },
-        {
           "kategori": "Biler",
           "tekst": "Dekkbytte Crafter/Maxus hos Møller Bil",
           "med": [
@@ -294,6 +279,10 @@
     {
       "navn": "Skal vi danse",
       "info": "Sluttdato ikke oppgitt"
+    },
+    {
+      "navn": "Sa_G",
+      "info": "Går ut neste uke – dato ikke satt"
     }
   ],
   "oppdrag": [
@@ -304,44 +293,26 @@
       "pagar": true,
       "sjekkliste": [
         {
-          "tekst": "Hente bordunderstell fra pulverlakk",
-          "hvem": "Andy, Christoph, Johannes",
+          "tekst": "Montere nye bein på bordene – i dag (kontakt Nico, 455 68 808)",
+          "hvem": "Andy",
           "ferdig": false
         },
         {
-          "tekst": "Hente bord «Onkel Blaa»",
-          "ferdig": false
-        },
-        {
-          "tekst": "Hente bordplate",
-          "ferdig": false
-        },
-        {
-          "tekst": "Lakkere bord",
+          "tekst": "Prise tilleggsbestilling – langt barbord",
+          "hvem": "Christoph",
           "ferdig": false
         }
       ]
     },
     {
-      "tittel": "Skal vi danse",
-      "type": "Utleie",
-      "pagar": true,
-      "info": "Utleid – sluttdato ikke oppgitt"
-    },
-    {
-      "tittel": "Sa_G",
-      "type": "Utleie",
-      "uke": 46,
-      "info": "Går ut neste uke – dato ikke satt"
-    },
-    {
-      "tittel": "OSV-26-003 ODV – Utbedring av rekkverk",
+      "tittel": "ODV · Utbedring av rekkverk",
       "type": "Prosjekt",
       "fra": "2026-11-09",
       "til": "2026-11-09",
       "tid": "09:00",
       "sted": "Ole Deviks vei 6",
-      "info": "Kontakt: Håkon Myhre Hansen, 932 66 310"
+      "info": "Kontakt: Håkon Myhre Hansen, 932 66 310",
+      "nr": "OSV-26-003"
     }
   ]
 }

@@ -6,7 +6,7 @@ Tre skjermer, én side, én datafil:
 |---------|---------------------------------|-------|
 | Venstre | `skjerm.html?skjerm=venstre`    | Andy og Christoph |
 | Midt    | `skjerm.html?skjerm=midt`       | Kristian, Johannes, Annkarin + utstyr utleid og beskjed |
-| Høyre   | `skjerm.html?skjerm=hoyre`      | Oppdrag: pågående prosjekter med sjekkliste, kommende oppdrag, 3-ukers kalender, utstyr utleid |
+| Høyre   | `skjerm.html?skjerm=hoyre`      | Oppdrag: pågående prosjekter med sjekkliste, kommende oppdrag, 3-ukers kalender, utleie |
 
 Alt innhold ligger i **`data.json`**. Skjermene henter filen på nytt hvert minutt, så når dere endrer den, oppdateres skjermene av seg selv. Ingen ny opplasting i Yodeck.
 
@@ -55,7 +55,9 @@ Kategorier med egen farge: Lager, Utstyr, Verksted, Lokaler, Transport, Biler, E
 ```json
 { "tittel": "Rigg Oslo Spektrum", "type": "Rigg", "fra": "2026-11-03", "til": "2026-11-05", "tid": "07:00", "sted": "Oslo", "info": "2 biler" }
 ```
-`type` gir farge: Utleie, Retur, Levering, Rigg, Event, Transport. Uten `fra`-dato havner oppdraget under «Uten dato». Vet du bare uka, bruk `"uke": 46` i stedet for `fra`/`til`.
+Bruk `"nr"` med jobbkoden (f.eks. `"OSV-26-003"`) – den vises over datoen og tidspunktet, og bestemmer fargen: **LAB-… = turkis (LAB42)**, **OSV-… = oransje (Oslo Sveiseverksted)**. Uten `nr` gir `type` farge: Retur, Levering, Rigg, Event, Transport.
+
+**Utleie** legges i `"utleid"` (vises i boksen «Utleie»), ikke i `"oppdrag"`. Oppdrag med `"type": "Utleie"` flyttes dit automatisk og vises ikke under «Oppdrag» eller i kalenderen. Uten `fra`-dato havner oppdraget under «Uten dato». Vet du bare uka, bruk `"uke": 46` i stedet for `fra`/`til`.
 
 **Prosjekt med sjekkliste** (høyre skjerm, under «Pågår nå»):
 ```json
