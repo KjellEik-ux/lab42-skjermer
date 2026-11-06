@@ -346,6 +346,10 @@ async function load(){
 document.fonts?.ready.then(()=>lastJSON&&autofit());
 load();setInterval(load,POLL_MS);
 setTimeout(()=>location.reload(),6*3600*1000);
+// Last siden på nytt når skjerm.html er endret, så nye funksjoner kommer ut uten å vente 6 timer
+let pageSig=null;
+async function checkPage(){try{const r=await fetch('skjerm.html?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const t=await r.text();const sig=t.length+':'+t.slice(-400);if(pageSig&&sig!==pageSig)location.reload();pageSig=sig;}catch(e){}}
+checkPage();setInterval(checkPage,5*60*1000);
 </script>
 </body>
 </html>
