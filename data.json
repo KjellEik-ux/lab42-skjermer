@@ -1,5 +1,5 @@
 {
-  "oppdatert": "2026-11-06T11:39",
+  "oppdatert": "2026-11-06T11:40",
   "undertittel": "Lager og verksted",
   "beskjed": "Ha en fin dag!",
   "skjermer": {
@@ -211,6 +211,14 @@
             "Kristian"
           ],
           "evergreen": true
+        },
+        {
+          "kategori": "Utstyr",
+          "tekst": "Lage instruks for oppussing av Prolyte, samt kapping av ben",
+          "med": [
+            "Johannes"
+          ],
+          "haster": true
         }
       ]
     },
@@ -290,6 +298,14 @@
         {
           "kategori": "Felles",
           "tekst": "Still inn kaffemaskinen"
+        },
+        {
+          "kategori": "Utstyr",
+          "tekst": "Lage instruks for oppussing av Prolyte, samt kapping av ben",
+          "med": [
+            "Christoph"
+          ],
+          "haster": true
         }
       ]
     },
