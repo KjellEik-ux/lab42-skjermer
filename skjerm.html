@@ -101,6 +101,14 @@ main{flex:1;display:flex;gap:20px;min-height:0}
 .ritem b{display:block;font-size:22px;font-weight:600}
 .ritem span{display:block;font-size:17px;color:var(--muted-foreground);margin-top:2px}
 .msg{flex:1}
+.osv{flex:none}
+.osv .card-h .ttl{color:var(--c-osv)}
+.osv-body{padding:14px 26px 22px}
+.osv-sum{font-size:56px;font-weight:700;letter-spacing:-.03em;line-height:1;color:var(--foreground)}
+.osv-sum small{font-size:26px;font-weight:600;color:var(--muted-foreground);margin-left:6px}
+.osv-meta{font-size:17px;color:var(--muted-foreground);margin-top:10px}
+.osv-prev{display:flex;justify-content:space-between;font-size:17px;color:var(--muted-foreground);border-top:1px solid var(--border);margin-top:16px;padding-top:12px}
+.osv-prev b{color:var(--foreground);font-weight:600}
 .msg p{padding:20px 26px;font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.25}
 
 .agenda{flex:1}
@@ -228,11 +236,25 @@ function personCard(p,wide){
   </section>`;
 }
 
+// Fakturert denne måneden for Oslo Sveiseverksted – fra okonomi.json (oppdateres automatisk fra Tripletex)
+let OKONOMI=null;
+const fmtKr=n=>Math.round(n||0).toLocaleString('nb-NO');
+const fmtMnd=m=>{if(!m)return '';const[y,mm]=m.split('-').map(Number);return new Intl.DateTimeFormat('nb-NO',{month:'long',timeZone:'Europe/Oslo'}).format(new Date(y,mm-1,15));};
+function osvCard(o){const f=o&&o.osvFakturert;if(!f)return '';
+  const n=osloNow();const cur=`${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
+  // Ny måned før neste oppdatering: vis 0 i stedet for forrige måneds tall
+  const belop=f.maned===cur?f.belopEksMva:0, antall=f.maned===cur?(f.antallFakturaer||0):0;
+  const prev=f.maned===cur?f.forrigeManed:{maned:f.maned,belopEksMva:f.belopEksMva};
+  return `<section class="card osv"><div class="card-h"><div><div class="ttl">Oslo Sveiseverksted</div><div class="desc">Fakturert i ${esc(fmtMnd(cur))}</div></div></div><div class="sep-h"></div>
+    <div class="osv-body"><div class="osv-sum">${fmtKr(belop)}<small>kr</small></div>
+      <div class="osv-meta">${antall} ${antall===1?'faktura':'fakturaer'} · eks. mva</div>
+      ${prev&&prev.maned?`<div class="osv-prev"><span>${esc(fmtMnd(prev.maned).replace(/^./,c=>c.toUpperCase()))}</span><b class="mono">${fmtKr(prev.belopEksMva)} kr</b></div>`:''}</div></section>`;}
 function sidePanel(d,cfg){
   const u=utleieListe(d).map(x=>({navn:x.navn,info:utleieInfo(x)})); const showMsg=(cfg||{}).beskjed!==false;
   return `<aside class="side">
     <section class="card${showMsg?'':' grow'}"><div class="card-h"><div><div class="ttl">Utleie</div><div class="desc">${u.length} ${u.length===1?'utleie':'utleier'}</div></div></div><div class="sep-h"></div>
       <div class="rlist">${u.map(x=>`<div class="ritem"><div class="ic">${ICON.box}</div><div><b>${esc(x.navn)}</b><span>${esc(x.info)}</span></div></div>`).join('')||'<div class="empty" style="padding:16px 0">Ingenting ute nå</div>'}</div></section>
+    ${SCREEN==='hoyre'?osvCard(OKONOMI):''}
     ${showMsg?`<section class="card msg"><div class="card-h"><div><div class="ttl">Beskjed</div></div></div><div class="sep-h"></div><p>${esc(d.beskjed||'')}</p></section>`:''}
   </aside>`;
 }
@@ -310,7 +332,9 @@ async function load(){
     const r=await fetch(DATA_URL+(DATA_URL.includes('?')?'&':'?')+'t='+Date.now(),{cache:'no-store'});
     if(!r.ok)throw new Error(r.status);
     const txt=await r.text();const d=JSON.parse(txt);
-    if(txt!==lastJSON){lastJSON=txt;render(d);}
+    let okTxt='';
+    if(SCREEN==='hoyre'){try{const r2=await fetch('okonomi.json?t='+Date.now(),{cache:'no-store'});if(r2.ok){okTxt=await r2.text();OKONOMI=JSON.parse(okTxt);}}catch(e){}}
+    if(txt+okTxt!==lastJSON){lastJSON=txt+okTxt;render(d);}
     document.getElementById('dot').classList.remove('off');
     const u=d.oppdatert?new Date(d.oppdatert):null;
     document.getElementById('f-upd').textContent=u&&!isNaN(u)?`Live · oppdatert ${u.toLocaleString('nb-NO',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}`:'Live';

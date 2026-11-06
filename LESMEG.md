@@ -74,4 +74,7 @@ Vil du knytte en personoppgave til prosjektet, legg til `"prosjekt": "LAB-26-001
 
 **Beskjed og utleid utstyr:** `"beskjed"` og `"utleid"` øverst/nederst i filen.
 
+**Oslo Sveiseverksted – fakturert denne måneden** (høyre skjerm, under Utleie):
+Ligger i **`okonomi.json`**, ikke i `data.json`, og oppdateres automatisk fra Tripletex av en planlagt oppgave i Claude (hver time på hverdager, 07–17). Ikke rediger den for hånd. Tallet er sum fakturert eks. mva på avdeling «Avdeling Oslo Sveiseverksted» fra den 1. i måneden, med kreditnotaer trukket fra. Første dag i ny måned viser skjermen 0 til første oppdatering. Mangler filen, vises ikke kortet.
+
 **Tips:** JSON er pirkete med komma og anførselstegn. Lim filen inn på jsonlint.com før du lagrer hvis du er usikker. Blir filen ødelagt, viser skjermene sist kjente versjon og en oransje prikk nede til høyre.
