@@ -1,5 +1,5 @@
 {
-  "oppdatert": "2026-11-06T11:38",
+  "oppdatert": "2026-11-06T11:39",
   "undertittel": "Lager og verksted",
   "beskjed": "Ha en fin dag!",
   "skjermer": {
@@ -94,6 +94,15 @@
           "med": [
             "Kristian",
             "Christoph"
+          ],
+          "evergreen": true
+        },
+        {
+          "kategori": "Utstyr",
+          "tekst": "Finne produkt som fjerner mugg på Prolyte",
+          "med": [
+            "Christoph",
+            "Kristian"
           ],
           "evergreen": true
         }
@@ -193,6 +202,15 @@
           "kategori": "Verksted",
           "tekst": "Kappetegning til scenene",
           "haster": true
+        },
+        {
+          "kategori": "Utstyr",
+          "tekst": "Finne produkt som fjerner mugg på Prolyte",
+          "med": [
+            "Andy",
+            "Kristian"
+          ],
+          "evergreen": true
         }
       ]
     },
@@ -227,6 +245,15 @@
         {
           "kategori": "Verksted",
           "tekst": "Lag dollyer ved behov og tid",
+          "med": [
+            "Andy",
+            "Christoph"
+          ],
+          "evergreen": true
+        },
+        {
+          "kategori": "Utstyr",
+          "tekst": "Finne produkt som fjerner mugg på Prolyte",
           "med": [
             "Andy",
             "Christoph"
