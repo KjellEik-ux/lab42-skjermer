@@ -1,5 +1,5 @@
 {
-  "oppdatert": "2026-11-05T10:00",
+  "oppdatert": "2026-11-06T11:38",
   "undertittel": "Lager og verksted",
   "beskjed": "Ha en fin dag!",
   "skjermer": {
@@ -188,6 +188,11 @@
           "kategori": "Ekstern/kunde",
           "tekst": "Prise tilleggsbestilling – langt barbord (Onkel Blå)",
           "prosjekt": "LAB-26-001"
+        },
+        {
+          "kategori": "Verksted",
+          "tekst": "Kappetegning til scenene",
+          "haster": true
         }
       ]
     },
