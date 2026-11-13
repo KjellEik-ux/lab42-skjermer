@@ -1,5 +1,5 @@
 {
-  "oppdatert": "2026-11-06T11:40",
+  "oppdatert": "2026-11-13T12:54",
   "undertittel": "Lager og verksted",
   "beskjed": "Ha en fin dag!",
   "skjermer": {
@@ -30,13 +30,6 @@
       "navn": "Andy",
       "oppgaver": [
         {
-          "kategori": "Verksted",
-          "tekst": "Montere nye bein på bordene – Onkel Blå",
-          "notat": "I dag · kontakt Nico 455 68 808",
-          "prosjekt": "LAB-26-001",
-          "haster": true
-        },
-        {
           "kategori": "Ekstern/kunde",
           "tekst": "Gjerde til FirstAudio",
           "med": [
@@ -44,29 +37,6 @@
             "Kristian"
           ],
           "haster": true
-        },
-        {
-          "kategori": "Lager",
-          "tekst": "Reoler ved ventilasjon – rydd gangen før utstyr plasseres"
-        },
-        {
-          "kategori": "Utstyr",
-          "tekst": "Fikse gulvvasker"
-        },
-        {
-          "kategori": "Verksted",
-          "tekst": "Produsere bord",
-          "med": [
-            "Kristian",
-            "Christoph"
-          ]
-        },
-        {
-          "kategori": "Lokaler",
-          "tekst": "Vurder riving ved Uttrykk",
-          "med": [
-            "Christoph"
-          ]
         },
         {
           "kategori": "Lokaler",
@@ -95,7 +65,8 @@
             "Kristian",
             "Christoph"
           ],
-          "evergreen": true
+          "evergreen": true,
+          "notat": "Bekreft om vi har nok"
         },
         {
           "kategori": "Utstyr",
@@ -103,8 +74,50 @@
           "med": [
             "Christoph",
             "Kristian"
+          ]
+        },
+        {
+          "kategori": "Lager",
+          "tekst": "Fjern/rydd/selg overflødig utstyr",
+          "med": [
+            "Christoph",
+            "Johannes"
           ],
-          "evergreen": true
+          "notat": "Delvis gjort"
+        },
+        {
+          "kategori": "Utstyr",
+          "tekst": "Renovere traller",
+          "med": [
+            "Kristian"
+          ]
+        },
+        {
+          "kategori": "Utstyr",
+          "tekst": "Renovere trafoer",
+          "med": [
+            "Kristian"
+          ]
+        },
+        {
+          "kategori": "Verksted",
+          "tekst": "Lage oppheng til V-frames",
+          "med": [
+            "Christoph",
+            "Kristian"
+          ]
+        },
+        {
+          "kategori": "Ekstern/kunde",
+          "tekst": "Skidata LSK – garantireparasjon av hjul/understell",
+          "haster": true
+        },
+        {
+          "kategori": "Ekstern/kunde",
+          "tekst": "Lille O sportsbar – oppfølging etter befaring",
+          "med": [
+            "Christoph"
+          ]
         }
       ]
     },
@@ -126,41 +139,21 @@
           "med": [
             "Annkarin",
             "Johannes"
-          ]
+          ],
+          "evergreen": true
         },
         {
           "kategori": "Lager",
-          "tekst": "Fjern fremmed utstyr, avklar dekk",
+          "tekst": "Fjern/rydd/selg overflødig utstyr",
           "med": [
-            "Isak"
+            "Andy",
+            "Johannes"
           ],
           "notat": "Delvis gjort"
         },
         {
           "kategori": "Utstyr",
-          "tekst": "Gjennomgå: behold, selg eller ta ut",
-          "med": [
-            "Isak"
-          ]
-        },
-        {
-          "kategori": "Utstyr",
           "tekst": "Finn misplassert stiftepistol – test på restmateriale når funnet"
-        },
-        {
-          "kategori": "Verksted",
-          "tekst": "Produsere bord",
-          "med": [
-            "Andy",
-            "Kristian"
-          ]
-        },
-        {
-          "kategori": "Lokaler",
-          "tekst": "Vurder riving ved Uttrykk",
-          "med": [
-            "Andy"
-          ]
         },
         {
           "kategori": "Transport",
@@ -168,13 +161,6 @@
           "med": [
             "Andy",
             "Kristian"
-          ]
-        },
-        {
-          "kategori": "Biler",
-          "tekst": "Dekkbytte Crafter/Maxus hos Møller Bil",
-          "med": [
-            "Johannes"
           ]
         },
         {
@@ -191,12 +177,8 @@
             "Andy",
             "Kristian"
           ],
-          "evergreen": true
-        },
-        {
-          "kategori": "Ekstern/kunde",
-          "tekst": "Prise tilleggsbestilling – langt barbord (Onkel Blå)",
-          "prosjekt": "LAB-26-001"
+          "evergreen": true,
+          "notat": "Bekreft om vi har nok"
         },
         {
           "kategori": "Verksted",
@@ -209,16 +191,37 @@
           "med": [
             "Andy",
             "Kristian"
-          ],
-          "evergreen": true
+          ]
         },
         {
           "kategori": "Utstyr",
           "tekst": "Lage instruks for oppussing av Prolyte, samt kapping av ben",
           "med": [
             "Johannes"
-          ],
-          "haster": true
+          ]
+        },
+        {
+          "kategori": "Utstyr",
+          "tekst": "Fikse gulvvasker"
+        },
+        {
+          "kategori": "Ekstern/kunde",
+          "tekst": "Prise utleie truss for Prototyper AS"
+        },
+        {
+          "kategori": "Verksted",
+          "tekst": "Lage oppheng til V-frames",
+          "med": [
+            "Andy",
+            "Kristian"
+          ]
+        },
+        {
+          "kategori": "Ekstern/kunde",
+          "tekst": "Lille O sportsbar – oppfølging etter befaring",
+          "med": [
+            "Andy"
+          ]
         }
       ]
     },
@@ -235,14 +238,6 @@
           "haster": true
         },
         {
-          "kategori": "Verksted",
-          "tekst": "Produsere bord",
-          "med": [
-            "Andy",
-            "Christoph"
-          ]
-        },
-        {
           "kategori": "Transport",
           "tekst": "Tøm siste 40-fotscontainer i Drammen",
           "med": [
@@ -257,7 +252,8 @@
             "Andy",
             "Christoph"
           ],
-          "evergreen": true
+          "evergreen": true,
+          "notat": "Bekreft om vi har nok"
         },
         {
           "kategori": "Utstyr",
@@ -265,8 +261,29 @@
           "med": [
             "Andy",
             "Christoph"
-          ],
-          "evergreen": true
+          ]
+        },
+        {
+          "kategori": "Utstyr",
+          "tekst": "Renovere traller",
+          "med": [
+            "Andy"
+          ]
+        },
+        {
+          "kategori": "Utstyr",
+          "tekst": "Renovere trafoer",
+          "med": [
+            "Andy"
+          ]
+        },
+        {
+          "kategori": "Verksted",
+          "tekst": "Lage oppheng til V-frames",
+          "med": [
+            "Andy",
+            "Christoph"
+          ]
         }
       ]
     },
@@ -286,26 +303,29 @@
           "med": [
             "Christoph",
             "Annkarin"
-          ]
-        },
-        {
-          "kategori": "Biler",
-          "tekst": "Dekkbytte Crafter/Maxus hos Møller Bil",
-          "med": [
-            "Christoph"
-          ]
+          ],
+          "evergreen": true
         },
         {
           "kategori": "Felles",
-          "tekst": "Still inn kaffemaskinen"
+          "tekst": "Still inn kaffemaskinen",
+          "notat": "Venter på svar fra Tom/Solberg & Hansen"
         },
         {
           "kategori": "Utstyr",
           "tekst": "Lage instruks for oppussing av Prolyte, samt kapping av ben",
           "med": [
             "Christoph"
+          ]
+        },
+        {
+          "kategori": "Lager",
+          "tekst": "Fjern/rydd/selg overflødig utstyr",
+          "med": [
+            "Christoph",
+            "Andy"
           ],
-          "haster": true
+          "notat": "Delvis gjort"
         }
       ]
     },
@@ -318,7 +338,8 @@
           "med": [
             "Christoph",
             "Johannes"
-          ]
+          ],
+          "evergreen": true
         }
       ]
     }
