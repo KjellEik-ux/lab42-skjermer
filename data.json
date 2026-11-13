@@ -1,7 +1,7 @@
 {
-  "oppdatert": "2026-11-13T13:08",
+  "oppdatert": "2026-11-13T13:17",
   "undertittel": "Lager og verksted",
-  "beskjed": "Ha en fin dag!",
+  "beskjed": "Oh brodder, where art thou? ❄️ Det er glatt ute – husk broddene!",
   "skjermer": {
     "venstre": {
       "tittel": "Gjøreliste",
@@ -18,7 +18,8 @@
         "annkarin"
       ],
       "sidepanel": true,
-      "beskjed": true
+      "beskjed": true,
+      "utleie": false
     },
     "hoyre": {
       "tittel": "Oppdrag",
@@ -30,7 +31,7 @@
       "navn": "Andy",
       "oppgaver": [
         {
-          "kategori": "Ekstern/kunde",
+          "kategori": "Kunde/prosjekt",
           "tekst": "Gjerde til FirstAudio",
           "med": [
             "Christoph",
@@ -39,12 +40,12 @@
           "haster": true
         },
         {
-          "kategori": "Lokaler",
+          "kategori": "Bygg/drift",
           "tekst": "Demonter vifte",
           "advarsel": "Bekreft at strømmen er frakoblet først"
         },
         {
-          "kategori": "Transport",
+          "kategori": "Lager",
           "tekst": "Tøm siste 40-fotscontainer i Drammen",
           "med": [
             "Kristian",
@@ -52,7 +53,7 @@
           ]
         },
         {
-          "kategori": "Ekstern/kunde",
+          "kategori": "Kunde/prosjekt",
           "tekst": "Befaring med Dag 16.11",
           "med": [
             "Christoph"
@@ -87,14 +88,14 @@
           "notat": "Delvis gjort"
         },
         {
-          "kategori": "Utstyr",
+          "kategori": "Verksted",
           "tekst": "Renovere traller",
           "med": [
             "Kristian"
           ]
         },
         {
-          "kategori": "Utstyr",
+          "kategori": "Verksted",
           "tekst": "Renovere trafoer",
           "med": [
             "Kristian"
@@ -109,12 +110,12 @@
           ]
         },
         {
-          "kategori": "Ekstern/kunde",
+          "kategori": "Kunde/prosjekt",
           "tekst": "Skidata LSK – garantireparasjon av hjul/understell",
           "haster": true
         },
         {
-          "kategori": "Ekstern/kunde",
+          "kategori": "Kunde/prosjekt",
           "tekst": "Lille O sportsbar – oppfølging etter befaring",
           "med": [
             "Christoph"
@@ -135,7 +136,7 @@
       "navn": "Christoph",
       "oppgaver": [
         {
-          "kategori": "Ekstern/kunde",
+          "kategori": "Kunde/prosjekt",
           "tekst": "Gjerde til FirstAudio",
           "med": [
             "Andy",
@@ -166,7 +167,7 @@
           "tekst": "Finn misplassert stiftepistol – test på restmateriale når funnet"
         },
         {
-          "kategori": "Transport",
+          "kategori": "Lager",
           "tekst": "Tøm siste 40-fotscontainer i Drammen",
           "med": [
             "Andy",
@@ -174,7 +175,7 @@
           ]
         },
         {
-          "kategori": "Ekstern/kunde",
+          "kategori": "Kunde/prosjekt",
           "tekst": "Befaring med Dag 16.11",
           "med": [
             "Andy"
@@ -192,7 +193,7 @@
           "notat": "Bekreft om vi har nok"
         },
         {
-          "kategori": "Verksted",
+          "kategori": "Kunde/prosjekt",
           "tekst": "Kappetegning til scenene",
           "haster": true
         },
@@ -212,11 +213,11 @@
           ]
         },
         {
-          "kategori": "Utstyr",
+          "kategori": "Bygg/drift",
           "tekst": "Fikse gulvvasker"
         },
         {
-          "kategori": "Ekstern/kunde",
+          "kategori": "Kunde/prosjekt",
           "tekst": "Prise utleie truss for Prototyper AS",
           "prosjekt": "LAB-26-006 BTR"
         },
@@ -229,7 +230,7 @@
           ]
         },
         {
-          "kategori": "Ekstern/kunde",
+          "kategori": "Kunde/prosjekt",
           "tekst": "Lille O sportsbar – oppfølging etter befaring",
           "med": [
             "Andy"
@@ -237,7 +238,7 @@
           "prosjekt": "LAB-26-003"
         },
         {
-          "kategori": "Ekstern/kunde",
+          "kategori": "Kunde/prosjekt",
           "tekst": "Saturday Night Fever – prise spesialelementer",
           "prosjekt": "LAB-26-005 SNF"
         },
@@ -255,7 +256,7 @@
       "navn": "Kristian",
       "oppgaver": [
         {
-          "kategori": "Ekstern/kunde",
+          "kategori": "Kunde/prosjekt",
           "tekst": "Gjerde til FirstAudio",
           "med": [
             "Andy",
@@ -264,7 +265,7 @@
           "haster": true
         },
         {
-          "kategori": "Transport",
+          "kategori": "Lager",
           "tekst": "Tøm siste 40-fotscontainer i Drammen",
           "med": [
             "Andy",
@@ -290,14 +291,14 @@
           ]
         },
         {
-          "kategori": "Utstyr",
+          "kategori": "Verksted",
           "tekst": "Renovere traller",
           "med": [
             "Andy"
           ]
         },
         {
-          "kategori": "Utstyr",
+          "kategori": "Verksted",
           "tekst": "Renovere trafoer",
           "med": [
             "Andy"
@@ -341,7 +342,7 @@
           "evergreen": true
         },
         {
-          "kategori": "Felles",
+          "kategori": "Bygg/drift",
           "tekst": "Still inn kaffemaskinen",
           "notat": "Venter på svar fra Tom/Solberg & Hansen"
         },

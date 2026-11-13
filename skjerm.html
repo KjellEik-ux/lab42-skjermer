@@ -176,7 +176,8 @@ const DATA_URL=P.get('data')||'data.json';
 const POLL_MS=60*1000;
 
 const CAT={'lager':'--c-lager','utstyr':'--c-utstyr','verksted':'--c-verksted','lokaler':'--c-lokaler','transport':'--c-transport',
-  'biler':'--c-biler','ekstern/kunde':'--c-ekstern','ekstern':'--c-ekstern','felles':'--c-felles'};
+  'biler':'--c-biler','ekstern/kunde':'--c-ekstern','ekstern':'--c-ekstern','felles':'--c-felles',
+  'kunde/prosjekt':'--c-ekstern','bygg/drift':'--c-lokaler','transport/biler':'--c-transport'};
 const TYPE={'prosjekt':'--primary','utleie':'--c-utstyr','retur':'--c-verksted','levering':'--c-lager','rigg':'--c-lokaler','event':'--c-ekstern','transport':'--c-transport'};
 const cvar=(m,k)=>`var(${m[(k||'').toLowerCase()]||'--primary'})`;
 // Firma ut fra jobbkoden: LAB-… = LAB42, OSV-… = Oslo Sveiseverksted
@@ -250,12 +251,12 @@ function osvCard(o){const f=o&&o.osvFakturert;if(!f)return '';
       <div class="osv-meta">${antall} ${antall===1?'faktura':'fakturaer'} · eks. mva</div>
       ${prev&&prev.maned?`<div class="osv-prev"><span>${esc(fmtMnd(prev.maned).replace(/^./,c=>c.toUpperCase()))}</span><b class="mono">${fmtKr(prev.belopEksMva)} kr</b></div>`:''}</div></section>`;}
 function sidePanel(d,cfg){
-  const u=utleieListe(d).map(x=>({navn:x.navn,info:utleieInfo(x)})); const showMsg=(cfg||{}).beskjed!==false;
+  const u=utleieListe(d).map(x=>({navn:x.navn,info:utleieInfo(x)})); const showMsg=(cfg||{}).beskjed!==false; const showUtl=(cfg||{}).utleie!==false;
   return `<aside class="side">
-    <section class="card${showMsg?'':' grow'}"><div class="card-h"><div><div class="ttl">Utleie</div><div class="desc">${u.length} ${u.length===1?'utleie':'utleier'}</div></div></div><div class="sep-h"></div>
-      <div class="rlist">${u.map(x=>`<div class="ritem"><div class="ic">${ICON.box}</div><div><b>${esc(x.navn)}</b><span>${esc(x.info)}</span></div></div>`).join('')||'<div class="empty" style="padding:16px 0">Ingenting ute nå</div>'}</div></section>
+    ${showUtl?`<section class="card${showMsg?'':' grow'}"><div class="card-h"><div><div class="ttl">Utleie</div><div class="desc">${u.length} ${u.length===1?'utleie':'utleier'}</div></div></div><div class="sep-h"></div>
+      <div class="rlist">${u.map(x=>`<div class="ritem"><div class="ic">${ICON.box}</div><div><b>${esc(x.navn)}</b><span>${esc(x.info)}</span></div></div>`).join('')||'<div class="empty" style="padding:16px 0">Ingenting ute nå</div>'}</div></section>`:''}
     ${SCREEN==='hoyre'?osvCard(OKONOMI):''}
-    ${showMsg?`<section class="card msg"><div class="card-h"><div><div class="ttl">Beskjed</div></div></div><div class="sep-h"></div><p>${esc(d.beskjed||'')}</p></section>`:''}
+    ${showMsg?`<section class="card msg${showUtl?'':' grow'}"><div class="card-h"><div><div class="ttl">Beskjed</div></div></div><div class="sep-h"></div><p>${esc(d.beskjed||'')}</p></section>`:''}
   </aside>`;
 }
 

@@ -47,7 +47,9 @@ Valgfrie felt:
 - `"haster": true` – havner øverst i en rød «Haster»-boks, og kortet får et rødt merke
 - `"evergreen": true` – løpende oppgave som alltid står nederst under «Løpende» (teller ikke som vanlig oppgave)
 
-Kategorier med egen farge: Lager, Utstyr, Verksted, Lokaler, Transport, Biler, Ekstern/kunde, Felles. Andre navn fungerer også (får standardfarge).
+Kategorier med egen farge: Kunde/prosjekt, Verksted, Utstyr, Lager, Bygg/drift, Transport/biler. Andre navn fungerer også (får standardfarge).
+
+Skjul utleieboksen på en skjerm med `"utleie": false` under skjermen i `skjermer`.
 
 **Flytte folk mellom skjermene:** endre `"kolonner"` under `"skjermer"`. Venstre har to brede kolonner, midt har tre smalere + sidepanel.
 
