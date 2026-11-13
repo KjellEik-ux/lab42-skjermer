@@ -1,5 +1,5 @@
 {
-  "oppdatert": "2026-11-13T13:05",
+  "oppdatert": "2026-11-13T13:08",
   "undertittel": "Lager og verksted",
   "beskjed": "Ha en fin dag!",
   "skjermer": {
@@ -417,6 +417,16 @@
       "sted": "Ole Deviks vei 6",
       "info": "Kontakt: Håkon Myhre Hansen, 932 66 310",
       "nr": "OSV-26-003"
+    },
+    {
+      "tittel": "SOL · Reparasjon av garasjeportmekanisme",
+      "type": "Prosjekt",
+      "fra": "2026-11-17",
+      "til": "2026-11-17",
+      "tid": "08:30",
+      "sted": "Solkollen sameie nr. 49, Lambertseter",
+      "info": "Kontakt: Mette Norr, 928 14 767 · Sveise og forsterke fjærbrakett, flekke med maling · Garasjeplassen må være tilgjengelig",
+      "nr": "OSV-26-007 SOL"
     }
   ]
 }
