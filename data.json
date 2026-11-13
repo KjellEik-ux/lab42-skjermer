@@ -1,5 +1,5 @@
 {
-  "oppdatert": "2026-11-13T12:54",
+  "oppdatert": "2026-11-13T13:05",
   "undertittel": "Lager og verksted",
   "beskjed": "Ha en fin dag!",
   "skjermer": {
@@ -53,10 +53,11 @@
         },
         {
           "kategori": "Ekstern/kunde",
-          "tekst": "Avtal befaring med Dag",
+          "tekst": "Befaring med Dag 16.11",
           "med": [
             "Christoph"
-          ]
+          ],
+          "prosjekt": "LAB-26-004 PCO"
         },
         {
           "kategori": "Verksted",
@@ -117,6 +118,15 @@
           "tekst": "Lille O sportsbar – oppfølging etter befaring",
           "med": [
             "Christoph"
+          ],
+          "prosjekt": "LAB-26-003"
+        },
+        {
+          "kategori": "Verksted",
+          "tekst": "Lage oppheng til Hoac-diagonaler",
+          "med": [
+            "Christoph",
+            "Kristian"
           ]
         }
       ]
@@ -165,10 +175,11 @@
         },
         {
           "kategori": "Ekstern/kunde",
-          "tekst": "Avtal befaring med Dag",
+          "tekst": "Befaring med Dag 16.11",
           "med": [
             "Andy"
-          ]
+          ],
+          "prosjekt": "LAB-26-004 PCO"
         },
         {
           "kategori": "Verksted",
@@ -206,7 +217,8 @@
         },
         {
           "kategori": "Ekstern/kunde",
-          "tekst": "Prise utleie truss for Prototyper AS"
+          "tekst": "Prise utleie truss for Prototyper AS",
+          "prosjekt": "LAB-26-006 BTR"
         },
         {
           "kategori": "Verksted",
@@ -221,6 +233,20 @@
           "tekst": "Lille O sportsbar – oppfølging etter befaring",
           "med": [
             "Andy"
+          ],
+          "prosjekt": "LAB-26-003"
+        },
+        {
+          "kategori": "Ekstern/kunde",
+          "tekst": "Saturday Night Fever – prise spesialelementer",
+          "prosjekt": "LAB-26-005 SNF"
+        },
+        {
+          "kategori": "Verksted",
+          "tekst": "Lage oppheng til Hoac-diagonaler",
+          "med": [
+            "Andy",
+            "Kristian"
           ]
         }
       ]
@@ -280,6 +306,14 @@
         {
           "kategori": "Verksted",
           "tekst": "Lage oppheng til V-frames",
+          "med": [
+            "Andy",
+            "Christoph"
+          ]
+        },
+        {
+          "kategori": "Verksted",
+          "tekst": "Lage oppheng til Hoac-diagonaler",
           "med": [
             "Andy",
             "Christoph"
