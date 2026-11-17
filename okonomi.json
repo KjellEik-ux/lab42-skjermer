@@ -1,9 +1,9 @@
 {
   "osvFakturert": {
     "maned": "2026-11",
-    "belopEksMva": 8163,
-    "antallFakturaer": 5,
+    "belopEksMva": 14088,
+    "antallFakturaer": 6,
     "forrigeManed": { "maned": "2026-10", "belopEksMva": 48303 },
-    "oppdatert": "2026-11-09T12:13"
+    "oppdatert": "2026-11-17T10:31"
   }
 }
