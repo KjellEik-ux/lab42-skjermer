@@ -31,20 +31,15 @@
       "navn": "Andy",
       "oppgaver": [
         {
-          "kategori": "Kunde/prosjekt",
-          "tekst": "Grønlands Torg – befaring: beslag til dør/rampe for barnevogner",
-          "notat": "I løpet av uka · Kontakt Erlend Spilling, 900 60 560",
-          "prosjekt": "OSV-26-011 FOR"
-        },
-        {
-          "kategori": "Kunde/prosjekt",
-          "tekst": "Skidata – prise 20 stk. single turnstiles (plug and play)",
+          "kategori": "Verksted",
+          "tekst": "TRE – produsere trapper til tribune m.m.",
           "med": [
+            "Johannes",
             "Christoph",
-            "Johannes"
+            "Kristian"
           ],
-          "notat": "Kunden sender tilbud tidlig i desember – ferdig denne uka / tidlig neste uke",
-          "prosjekt": "LAB-26-008 SIP",
+          "notat": "Må være ferdig onsdag morgen 25.11",
+          "prosjekt": "LAB-26-007 TRE",
           "haster": true
         },
         {
@@ -58,16 +53,21 @@
           "haster": true
         },
         {
-          "kategori": "Verksted",
-          "tekst": "TRE – produsere trapper til tribune m.m.",
+          "kategori": "Kunde/prosjekt",
+          "tekst": "Skidata – prise 20 stk. single turnstiles (plug and play)",
           "med": [
-            "Johannes",
             "Christoph",
-            "Kristian"
+            "Johannes"
           ],
-          "notat": "Må være ferdig onsdag morgen 25.11",
-          "prosjekt": "LAB-26-007 TRE",
+          "notat": "Kunden sender tilbud tidlig i desember – ferdig denne uka / tidlig neste uke",
+          "prosjekt": "LAB-26-008 SIP",
           "haster": true
+        },
+        {
+          "kategori": "Kunde/prosjekt",
+          "tekst": "Grønlands Torg – befaring: beslag til dør/rampe for barnevogner",
+          "notat": "I løpet av uka · Kontakt Erlend Spilling, 900 60 560",
+          "prosjekt": "OSV-26-011 FOR"
         },
         {
           "kategori": "Kunde/prosjekt",
@@ -175,17 +175,6 @@
       "navn": "Christoph",
       "oppgaver": [
         {
-          "kategori": "Kunde/prosjekt",
-          "tekst": "Skidata – prise 20 stk. single turnstiles (plug and play)",
-          "med": [
-            "Andy",
-            "Johannes"
-          ],
-          "notat": "Kunden sender tilbud tidlig i desember – ferdig denne uka / tidlig neste uke",
-          "prosjekt": "LAB-26-008 SIP",
-          "haster": true
-        },
-        {
           "kategori": "Verksted",
           "tekst": "TRE – produsere trapper til tribune m.m.",
           "med": [
@@ -195,6 +184,17 @@
           ],
           "notat": "Må være ferdig onsdag morgen 25.11",
           "prosjekt": "LAB-26-007 TRE",
+          "haster": true
+        },
+        {
+          "kategori": "Kunde/prosjekt",
+          "tekst": "Skidata – prise 20 stk. single turnstiles (plug and play)",
+          "med": [
+            "Andy",
+            "Johannes"
+          ],
+          "notat": "Kunden sender tilbud tidlig i desember – ferdig denne uka / tidlig neste uke",
+          "prosjekt": "LAB-26-008 SIP",
           "haster": true
         },
         {
@@ -319,16 +319,6 @@
       "oppgaver": [
         {
           "kategori": "Verksted",
-          "tekst": "Onkel Blaa – produsere fotstøtte",
-          "med": [
-            "Andy"
-          ],
-          "notat": "Ferdig torsdag 26.11",
-          "prosjekt": "LAB-26-001",
-          "haster": true
-        },
-        {
-          "kategori": "Verksted",
           "tekst": "TRE – produsere trapper til tribune m.m.",
           "med": [
             "Andy",
@@ -337,6 +327,16 @@
           ],
           "notat": "Må være ferdig onsdag morgen 25.11",
           "prosjekt": "LAB-26-007 TRE",
+          "haster": true
+        },
+        {
+          "kategori": "Verksted",
+          "tekst": "Onkel Blaa – produsere fotstøtte",
+          "med": [
+            "Andy"
+          ],
+          "notat": "Ferdig torsdag 26.11",
+          "prosjekt": "LAB-26-001",
           "haster": true
         },
         {
@@ -410,17 +410,6 @@
       "navn": "Johannes",
       "oppgaver": [
         {
-          "kategori": "Kunde/prosjekt",
-          "tekst": "Skidata – prise 20 stk. single turnstiles (plug and play)",
-          "med": [
-            "Christoph",
-            "Andy"
-          ],
-          "notat": "Kunden sender tilbud tidlig i desember – ferdig denne uka / tidlig neste uke",
-          "prosjekt": "LAB-26-008 SIP",
-          "haster": true
-        },
-        {
           "kategori": "Verksted",
           "tekst": "TRE – produsere trapper til tribune m.m.",
           "med": [
@@ -430,6 +419,17 @@
           ],
           "notat": "Må være ferdig onsdag morgen 25.11",
           "prosjekt": "LAB-26-007 TRE",
+          "haster": true
+        },
+        {
+          "kategori": "Kunde/prosjekt",
+          "tekst": "Skidata – prise 20 stk. single turnstiles (plug and play)",
+          "med": [
+            "Christoph",
+            "Andy"
+          ],
+          "notat": "Kunden sender tilbud tidlig i desember – ferdig denne uka / tidlig neste uke",
+          "prosjekt": "LAB-26-008 SIP",
           "haster": true
         },
         {
