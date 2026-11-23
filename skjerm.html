@@ -300,12 +300,16 @@ function renderOppdrag(d){
     cells+=`<div class="day${dt<today?' past':''}${+dt===+today?' today':''}"><div class="n">${dt.getDate()}${dt.getDate()===1||i===0?`<small>${fmtShort.format(dt).replace(/^\d+\.?\s*/,'')}</small>`:''}</div>
       ${evs.slice(0,3).map(j=>`<div class="ev" style="--c:${jcol(j)}">${j.nr?`<b>${esc(j.nr)}</b>`:''}<span>${esc(j.tittel)}</span></div>`).join('')}${evs.length>3?`<div class="ev">+${evs.length-3}</div>`:''}</div>`;}
 
-  return `<section class="card agenda"><div class="card-h"><div><div class="ttl">Oppdrag</div><div class="desc">${ongoing.length} pågår · ${dated.length+undated.length} kommende</div></div></div><div class="sep-h"></div><div class="alist">${agenda}</div></section>
+  return `<section class="card agenda"><div class="card-h"><div><div class="ttl">Oppdrag</div><div class="desc">${ongoing.length} pågår · ${dated.length+undated.length} kommende</div></div></div><div class="sep-h"></div><div class="alist"><div class="ainner">${agenda}</div></div></section>
     <section class="card cal"><div class="card-h"><div><div class="ttl">Kalender</div><div class="desc">Neste tre uker</div></div><div class="legend"><span class="badge" style="--c:var(--c-lab)"><span class="dot"></span>LAB42</span><span class="badge" style="--c:var(--c-osv)"><span class="dot"></span>OSV</span><span class="badge" style="--c:var(--c-utleie)"><span class="dot"></span>Utleie</span></div></div><div class="sep-h"></div><div class="grid">${cells}</div>
       ${undated.length?`<div class="undated">Uten dato: ${undated.map(j=>`<span class="badge" style="--c:${jcol(j)}"><span class="dot"></span>${esc(j.tittel)}</span>`).join('')}</div>`:''}</section>`;
 }
 
 function autofit(){
+  // Oppdragslista: krymp innholdet til alt får plass (ned til 55 %)
+  document.querySelectorAll('.alist').forEach(l=>{const inn=l.firstElementChild;if(!inn)return;
+    let z=1;inn.style.zoom=z;while(l.scrollHeight>l.clientHeight+2&&z>0.55){z-=0.03;inn.style.zoom=z;}
+  });
   document.querySelectorAll('.pbody').forEach(b=>{
     let fs=23;b.style.setProperty('--fs',fs+'px');
     const over=()=>b.classList.contains('wide')?b.scrollWidth>b.clientWidth+2:b.scrollHeight>b.clientHeight+2;

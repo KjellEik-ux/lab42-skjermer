@@ -1,5 +1,5 @@
 {
-  "oppdatert": "2026-11-23T11:58",
+  "oppdatert": "2026-11-23T12:01",
   "undertittel": "Lager og verksted",
   "beskjed": "Oh brodder, where art thou? ❄️ Det er glatt ute – husk broddene!",
   "skjermer": {
@@ -507,12 +507,12 @@
         {
           "tekst": "Montere nye bein på bordene – i dag (kontakt Nico, 455 68 808)",
           "hvem": "Andy",
-          "ferdig": false
+          "ferdig": true
         },
         {
           "tekst": "Prise tilleggsbestilling – langt barbord",
           "hvem": "Christoph",
-          "ferdig": false
+          "ferdig": true
         },
         {
           "tekst": "Produsere fotstøtte – ferdig torsdag 26.11",
