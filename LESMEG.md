@@ -4,11 +4,13 @@ Fem skjermer, nummerert 1–5 fra venstre, én side, én datafil:
 
 | Skjerm | Adresse                  | Viser |
 |--------|--------------------------|-------|
-| 1      | `skjerm.html?skjerm=1`   | (ny, vertikal – innhold kommer) |
+| 1      | `skjerm.html?skjerm=1`   | Kalender, fire uker (stående) + OSV fakturert |
 | 2      | `skjerm.html?skjerm=2`   | Andy og Christoph |
 | 3      | `skjerm.html?skjerm=3`   | Kristian, Johannes, Annkarin + beskjed |
-| 4      | `skjerm.html?skjerm=4`   | Oppdrag: pågående prosjekter med sjekkliste, kommende oppdrag, 3-ukers kalender, utleie |
-| 5      | `skjerm.html?skjerm=5`   | (ny, horisontal – innhold kommer) |
+| 4      | `skjerm.html?skjerm=4`   | Bare oppdrag: «Pågår nå» med sjekkliste og «Kommende» |
+| 5      | `skjerm.html?skjerm=5`   | Utstyr (Amphiscene / dry hire): ute nå, kommer, utleiekalender |
+
+Hva hver skjerm viser styres av `"visning"` under `"skjermer"` i data.json: `gjoreliste` (standard), `oppdrag`, `kalender` eller `utstyr`. `"vertikal": true` gir stående format, `"osv": true` viser OSV-kortet. Utleie kan få `"firma"` (f.eks. «Amphiscene» eller «Dry hire») som vises som merke på skjerm 5.
 
 De gamle adressene (`venstre`, `midt`, `hoyre`) virker fortsatt og viser skjerm 2, 3 og 4.
 

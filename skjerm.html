@@ -152,6 +152,37 @@ footer{display:flex;justify-content:space-between;align-items:center;font-size:1
 footer .live{display:flex;align-items:center;gap:9px}
 footer .pulse{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.15)}
 footer .pulse.off{background:var(--warning);box-shadow:0 0 0 4px rgba(245,158,11,.15)}
+
+/* Skjerm 4: to kolonner med oppdrag */
+main.v-oppdrag .agenda{flex:1;min-width:0}
+/* Skjerm 5: utstyr */
+main.v-utstyr .utl{flex:1;min-width:0}
+main.v-utstyr .col{flex:1.25;display:flex;flex-direction:column;gap:20px;min-width:0;min-height:0}
+main.v-utstyr .utl-k{flex:none;max-height:42%}
+main.v-utstyr .cal{flex:1}
+.rlist.big{flex:1;overflow:hidden}
+.rlist.big .ritem{padding:20px 0}
+.rlist.big .ritem b{font-size:28px}
+.rlist.big .ritem span{font-size:19px}
+.ritem .rt{flex:1;min-width:0}
+.ritem .rb{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+/* Stående skjerm (skjerm 1) */
+body.portrait #stage{width:1080px;height:1920px;padding:36px 36px 26px}
+body.portrait header{gap:18px}
+body.portrait .htxt h1{font-size:40px}
+body.portrait .clock{padding:12px 18px;gap:16px}
+body.portrait .clock .t{font-size:44px}
+body.portrait .clock .d{font-size:17px}
+body.portrait .clock .d b{font-size:19px}
+body.portrait .hbadges{display:none}
+main.v-kalender{flex-direction:column}
+main.v-kalender .cal{flex:1}
+body.portrait main.v-kalender .grid{gap:7px;padding:16px 16px 20px}
+body.portrait main.v-kalender .day{padding:9px 6px 7px;gap:6px}
+body.portrait main.v-kalender .day .n{font-size:20px}
+body.portrait main.v-kalender .ev{font-size:14px;padding:5px 6px}
+body.portrait main.v-kalender .ev b{font-size:12px}
+body.portrait main.v-kalender .legend{flex-direction:column;align-items:flex-end;gap:6px}
 </style>
 </head>
 <body>
@@ -194,7 +225,9 @@ const ICON={
   box:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>'
 };
 
-function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);document.getElementById('stage').style.transform=`translate(${(innerWidth-1920*s)/2}px,${(innerHeight-1080*s)/2}px) scale(${s})`;}
+let PORTRAIT=false;
+function setPortrait(p){if(p===PORTRAIT)return;PORTRAIT=p;document.body.classList.toggle('portrait',p);fit();}
+function fit(){const W=PORTRAIT?1080:1920,H=PORTRAIT?1920:1080;const s=Math.min(innerWidth/W,innerHeight/H);document.getElementById('stage').style.transform=`translate(${(innerWidth-W*s)/2}px,${(innerHeight-H*s)/2}px) scale(${s})`;}
 addEventListener('resize',fit);fit();
 
 function osloNow(){return new Date(new Date().toLocaleString('en-US',{timeZone:'Europe/Oslo'}));}
@@ -257,7 +290,7 @@ function sidePanel(d,cfg){
   return `<aside class="side">
     ${showUtl?`<section class="card${showMsg?'':' grow'}"><div class="card-h"><div><div class="ttl">Utleie</div><div class="desc">${u.length} ${u.length===1?'utleie':'utleier'}</div></div></div><div class="sep-h"></div>
       <div class="rlist">${u.map(x=>`<div class="ritem"><div class="ic">${ICON.box}</div><div><b>${esc(x.navn)}</b><span>${esc(x.info)}</span></div></div>`).join('')||'<div class="empty" style="padding:16px 0">Ingenting ute nå</div>'}</div></section>`:''}
-    ${SCREEN==='4'?osvCard(OKONOMI):''}
+    ${(cfg||{}).osv?osvCard(OKONOMI):''}
     ${showMsg?`<section class="card msg${showUtl?'':' grow'}"><div class="card-h"><div><div class="ttl">Beskjed</div></div></div><div class="sep-h"></div><p>${esc(d.beskjed||'')}</p></section>`:''}
   </aside>`;
 }
@@ -273,39 +306,76 @@ const fmtDay=new Intl.DateTimeFormat('nb-NO',{weekday:'long',day:'numeric',month
 
 function chk(j){const L=j.sjekkliste||[];if(!L.length)return '';const done=L.filter(x=>x.ferdig).length;
   return `<div class="chk"><div class="chk-h">Sjekkliste · ${done}/${L.length}<span class="bar2"><i style="width:${Math.round(done/L.length*100)}%"></i></span></div>${L.map(x=>`<div class="chk-i${x.ferdig?' done':''}"><span class="cb"></span><div>${esc(x.tekst)}${x.hvem?`<small>${esc(x.hvem)}</small>`:''}</div></div>`).join('')}</div>`;}
+// Felles: oppdrag med datoer regnet ut (uten utleie)
+function prepJobs(d,today){
+  return (d.oppdrag||[]).filter(j=>!isUtleie(j)).map(j=>{let f=parseD(j.fra),t=parseD(j.til)||f,approx=false;if(!f&&j.uke){f=weekStart(j.uke);t=new Date(f);t.setDate(f.getDate()+4);approx=true;}return{...j,f,t,approx};});
+}
+// Utleie med datoer: uten fra-dato men med til-dato regnes som ute fra i dag
+function prepUtleie(d,today){
+  return utleieListe(d).map(u=>{let f=parseD(u.fra),t=parseD(u.til);if(!f&&u.uke){f=weekStart(u.uke);t=t||new Date(f.getFullYear(),f.getMonth(),f.getDate()+4);}if(!f&&t)f=today;return{...u,utleie:true,f,t:t||f};});
+}
+const fmtDates=j=>j.f?`${fmtShort.format(j.f)}${j.t&&j.t-j.f?` → ${fmtShort.format(j.t)}`:''}`:'';
+function jobRow(j){
+  return `<div class="job" style="--c:${jcol(j)}"><div class="bar"></div>
+      <div class="when">${j.nr?`<b>${esc(j.nr)}</b><br>${j.approx?`Uke ${j.uke}`:j.f?fmtDates(j):'Pågår'}${j.tid?`<br>${esc(j.tid)}`:''}`:j.pagar&&!j.f?'<b>Pågår</b>':j.approx?`<b>Uke ${j.uke}</b><br>${fmtDates(j)}`:j.f?`<b>${fmtShort.format(j.f)}</b>${j.t&&j.t-j.f?`<br>→ ${fmtShort.format(j.t)}`:''}${j.tid?`<br>${esc(j.tid)}`:''}`:'Ikke satt'}</div>
+      <div class="what"><b>${esc(j.tittel)}</b><span>${esc([j.sted,j.info].filter(Boolean).join(' · '))}</span></div>
+      <span class="badge" style="--c:${jcol(j)}"><span class="dot"></span>${esc(firm(j)?FIRM_NAME[firm(j)]:(j.type||'Oppdrag'))}</span>${chk(j)}</div>`;
+}
+
+// Skjerm 4: ren oppdragsskjerm – «Pågår nå» til venstre, «Kommende» til høyre
 function renderOppdrag(d){
   const today=osloNow();today.setHours(0,0,0,0);
-  const jobs=(d.oppdrag||[]).filter(j=>!isUtleie(j)).map(j=>{let f=parseD(j.fra),t=parseD(j.til)||f,approx=false;if(!f&&j.uke){f=weekStart(j.uke);t=new Date(f);t.setDate(f.getDate()+4);approx=true;}return{...j,f,t,approx};});
+  const jobs=prepJobs(d,today);
   const ongoing=jobs.filter(j=>j.pagar);
   const dated=jobs.filter(j=>!j.pagar&&j.f&&j.t>=today).sort((a,b)=>a.f-b.f);
   const undated=jobs.filter(j=>!j.pagar&&!j.f);
   const days={},order=[];
   for(const j of dated){const on=j.f<today&&!j.approx;const k=j.approx?'uke'+j.uke:on?'pågår':dayKey(j.f);if(!(k in days)){days[k]=[];order.push([k,on?today:j.f]);}days[k].push(j);}
-  const label=(k,dt)=>{if(k==='pågår')return 'Pågår nå';if(k.startsWith('uke'))return 'Uke '+k.slice(3)+' · dato ikke satt';const diff=Math.round((dt-today)/864e5);const s=diff===0?'I dag':diff===1?'I morgen':fmtDay.format(dt);return s[0].toUpperCase()+s.slice(1);};
-  const dates=j=>j.f?`${fmtShort.format(j.f)}${j.t&&j.t-j.f?` → ${fmtShort.format(j.t)}`:''}`:'';
-  const row=j=>`<div class="job" style="--c:${jcol(j)}"><div class="bar"></div>
-      <div class="when">${j.nr?`<b>${esc(j.nr)}</b><br>${j.approx?`Uke ${j.uke}`:j.f?dates(j):'Pågår'}${j.tid?`<br>${esc(j.tid)}`:''}`:j.pagar&&!j.f?'<b>Pågår</b>':j.approx?`<b>Uke ${j.uke}</b><br>${dates(j)}`:j.f?`<b>${fmtShort.format(j.f)}</b>${j.t&&j.t-j.f?`<br>→ ${fmtShort.format(j.t)}`:''}${j.tid?`<br>${esc(j.tid)}`:''}`:'Ikke satt'}</div>
-      <div class="what"><b>${esc(j.tittel)}</b><span>${esc([j.sted,j.info].filter(Boolean).join(' · '))}</span></div>
-      <span class="badge" style="--c:${jcol(j)}"><span class="dot"></span>${esc(firm(j)?FIRM_NAME[firm(j)]:(j.type||'Oppdrag'))}</span>${chk(j)}</div>`;
-  let agenda=ongoing.length?`<div class="aday today"><h4>Pågår nå</h4>${ongoing.map(row).join('')}</div>`:'';
-  agenda+=order.slice(0,6).map(([k,dt])=>`<div class="aday${k===dayKey(today)?' today':''}"><h4>${esc(label(k,dt))}</h4>${days[k].map(row).join('')}</div>`).join('');
-  if(undated.length)agenda+=`<div class="aday"><h4>Uten dato</h4>${undated.map(row).join('')}</div>`;
-  if(!agenda)agenda='<div class="empty" style="padding-top:20px;font-size:20px">Ingen kommende oppdrag lagt inn.</div>';
+  const label=(k,dt)=>{if(k==='pågår')return 'Startet, ikke merket som pågår';if(k.startsWith('uke'))return 'Uke '+k.slice(3)+' · dato ikke satt';const diff=Math.round((dt-today)/864e5);const s=diff===0?'I dag':diff===1?'I morgen':fmtDay.format(dt);return s[0].toUpperCase()+s.slice(1);};
+  let kom=order.map(([k,dt])=>`<div class="aday${k===dayKey(today)?' today':''}"><h4>${esc(label(k,dt))}</h4>${days[k].map(jobRow).join('')}</div>`).join('');
+  if(undated.length)kom+=`<div class="aday"><h4>Uten dato</h4>${undated.map(jobRow).join('')}</div>`;
+  if(!kom)kom='<div class="empty" style="padding-top:20px;font-size:20px">Ingen kommende oppdrag lagt inn.</div>';
+  const paa=ongoing.length?`<div class="aday today">${ongoing.map(jobRow).join('')}</div>`:'<div class="empty" style="padding-top:20px;font-size:20px">Ingenting pågår nå.</div>';
+  return `<section class="card agenda"><div class="card-h"><div><div class="ttl">Pågår nå</div><div class="desc">${ongoing.length} ${ongoing.length===1?'oppdrag':'oppdrag'}</div></div></div><div class="sep-h"></div><div class="alist"><div class="ainner">${paa}</div></div></section>
+    <section class="card agenda"><div class="card-h"><div><div class="ttl">Kommende</div><div class="desc">${dated.length+undated.length} oppdrag</div></div></div><div class="sep-h"></div><div class="alist"><div class="ainner">${kom}</div></div></section>`;
+}
 
-  // Utleie i kalenderen: uten fra-dato men med til-dato regnes som ute fra i dag
-  const utl=utleieListe(d).map(u=>{let f=parseD(u.fra),t=parseD(u.til);if(!f&&u.uke){f=weekStart(u.uke);t=t||new Date(f.getFullYear(),f.getMonth(),f.getDate()+4);}if(!f&&t)f=today;return{...u,utleie:true,f,t:t||f};}).filter(u=>u.f);
+// Kalender – brukes på skjerm 1 (alt) og skjerm 5 (bare utleie)
+function renderCal(d,o){
+  o=o||{};const weeks=o.uker||3,maxEv=o.maks||3;
+  const today=osloNow();today.setHours(0,0,0,0);
+  const utl=prepUtleie(d,today).filter(u=>u.f);
+  const jobs=o.bareUtleie?[]:prepJobs(d,today);
   const calJobs=[...jobs,...utl];
   const start=new Date(today);start.setDate(start.getDate()-((start.getDay()+6)%7));
   let cells=['Ma','Ti','On','To','Fr','Lø','Sø'].map(x=>`<div class="dow">${x}</div>`).join('');
-  for(let i=0;i<21;i++){const dt=new Date(start);dt.setDate(start.getDate()+i);
+  for(let i=0;i<weeks*7;i++){const dt=new Date(start);dt.setDate(start.getDate()+i);
     const evs=calJobs.filter(j=>j.f&&dt>=j.f&&dt<=j.t);
     cells+=`<div class="day${dt<today?' past':''}${+dt===+today?' today':''}"><div class="n">${dt.getDate()}${dt.getDate()===1||i===0?`<small>${fmtShort.format(dt).replace(/^\d+\.?\s*/,'')}</small>`:''}</div>
-      ${evs.slice(0,3).map(j=>`<div class="ev" style="--c:${jcol(j)}">${j.nr?`<b>${esc(j.nr)}</b>`:''}<span>${esc(j.tittel)}</span></div>`).join('')}${evs.length>3?`<div class="ev">+${evs.length-3}</div>`:''}</div>`;}
-
-  return `<section class="card agenda"><div class="card-h"><div><div class="ttl">Oppdrag</div><div class="desc">${ongoing.length} pågår · ${dated.length+undated.length} kommende</div></div></div><div class="sep-h"></div><div class="alist"><div class="ainner">${agenda}</div></div></section>
-    <section class="card cal"><div class="card-h"><div><div class="ttl">Kalender</div><div class="desc">Neste tre uker</div></div><div class="legend"><span class="badge" style="--c:var(--c-lab)"><span class="dot"></span>LAB42</span><span class="badge" style="--c:var(--c-osv)"><span class="dot"></span>OSV</span><span class="badge" style="--c:var(--c-utleie)"><span class="dot"></span>Utleie</span></div></div><div class="sep-h"></div><div class="grid">${cells}</div>
+      ${evs.slice(0,maxEv).map(j=>`<div class="ev" style="--c:${jcol(j)}">${j.nr?`<b>${esc(j.nr)}</b>`:''}<span>${esc(j.tittel)}</span></div>`).join('')}${evs.length>maxEv?`<div class="ev">+${evs.length-maxEv}</div>`:''}</div>`;}
+  const undated=o.bareUtleie?[]:prepJobs(d,today).filter(j=>!j.pagar&&!j.f);
+  const legend=o.bareUtleie?'':`<div class="legend"><span class="badge" style="--c:var(--c-lab)"><span class="dot"></span>LAB42</span><span class="badge" style="--c:var(--c-osv)"><span class="dot"></span>OSV</span><span class="badge" style="--c:var(--c-utleie)"><span class="dot"></span>Utleie</span></div>`;
+  return `<section class="card cal"><div class="card-h"><div><div class="ttl">${esc(o.tittel||'Kalender')}</div><div class="desc">Neste ${weeks===3?'tre':weeks===4?'fire':weeks} uker</div></div>${legend}</div><div class="sep-h"></div><div class="grid" style="grid-template-rows:auto repeat(${weeks},1fr)">${cells}</div>
       ${undated.length?`<div class="undated">Uten dato: ${undated.map(j=>`<span class="badge" style="--c:${jcol(j)}"><span class="dot"></span>${esc(j.tittel)}</span>`).join('')}</div>`:''}</section>`;
 }
+
+// Skjerm 5: utstyr – Amphiscene og dry hire (alt i "utleid" + oppdrag med type Utleie)
+function renderUtstyr(d){
+  const today=osloNow();today.setHours(0,0,0,0);
+  const all=prepUtleie(d,today);
+  const ute=all.filter(u=>!u.f||u.f<=today), kommer=all.filter(u=>u.f&&u.f>today).sort((a,b)=>a.f-b.f);
+  const firmaBadge=u=>u.firma?`<span class="badge" style="--c:var(--c-utleie)"><span class="dot"></span>${esc(u.firma)}</span>`:'';
+  const left=u=>{if(!u.t||u.uke&&!u.til)return '';const n=Math.round((u.t-today)/864e5);return n<0?'<span class="badge danger"><span class="dot"></span>Over tiden</span>':n===0?'<span class="badge" style="--c:var(--warning)"><span class="dot"></span>Tilbake i dag</span>':n<=3?`<span class="badge" style="--c:var(--warning)"><span class="dot"></span>${n} ${n===1?'dag':'dager'} igjen</span>`:'';};
+  const item=u=>`<div class="ritem"><div class="ic">${ICON.box}</div><div class="rt"><b>${esc(u.navn)}</b><span>${esc([utleieInfoUt(u),u.sted].filter(Boolean).join(' · '))}</span></div><div class="rb">${firmaBadge(u)}${left(u)}</div></div>`;
+  return `<section class="card utl"><div class="card-h"><div><div class="ttl">Ute nå</div><div class="desc">${ute.length} ${ute.length===1?'utleie':'utleier'}</div></div></div><div class="sep-h"></div>
+      <div class="rlist big">${ute.map(item).join('')||'<div class="empty" style="padding:16px 0;font-size:22px">Ingenting ute nå</div>'}</div></section>
+    <div class="col">
+      <section class="card utl-k"><div class="card-h"><div><div class="ttl">Kommer</div><div class="desc">${kommer.length} planlagt</div></div></div><div class="sep-h"></div>
+        <div class="rlist big">${kommer.map(item).join('')||'<div class="empty" style="padding:16px 0;font-size:22px">Ingen planlagte utleier</div>'}</div></section>
+      ${renderCal(d,{bareUtleie:true,tittel:'Utleiekalender',uker:3,maks:4})}
+    </div>`;
+}
+function utleieInfoUt(u){if(u.info)return u.info;const f=parseD(u.fra),t=parseD(u.til);if(f&&t)return fmtShort.format(f)+' → '+fmtShort.format(t);if(t)return 'Ute til '+fmtShort.format(t);if(f)return 'Fra '+fmtShort.format(f);if(u.uke)return 'Uke '+u.uke;return '';}
 
 function autofit(){
   // Oppdragslista: krymp innholdet til alt får plass (ned til 55 %)
@@ -322,13 +392,18 @@ function autofit(){
 let lastJSON='';
 function render(d){
   const cfg=(d.skjermer||{})[SCREEN]||{};
+  const view=(cfg.visning||'gjoreliste').toLowerCase();
+  setPortrait(!!cfg.vertikal);
   const n=osloNow();
   document.getElementById('h-title').textContent=cfg.tittel||'Gjøreliste';
-  document.getElementById('h-sub').textContent=SCREEN==='4'?'Oppdrag':(d.undertittel||'Drift');
-  document.getElementById('h-badges').innerHTML=`<span class="badge secondary">Uke ${isoWeek(n)}</span>${d.frist&&SCREEN!=='4'?`<span class="badge" style="--c:var(--warning)"><span class="dot"></span>Frist ${esc(d.frist)}</span>`:''}`;
+  document.getElementById('h-sub').textContent=view==='gjoreliste'?(d.undertittel||'Drift'):(cfg.undertittel||cfg.tittel||'');
+  document.getElementById('h-badges').innerHTML=`<span class="badge secondary">Uke ${isoWeek(n)}</span>${d.frist&&view==='gjoreliste'?`<span class="badge" style="--c:var(--warning)"><span class="dot"></span>Frist ${esc(d.frist)}</span>`:''}`;
   document.getElementById('f-screen').textContent='Skjerm '+SCREEN+' av 5';
   const main=document.getElementById('main');
-  if(SCREEN==='4')main.innerHTML=renderOppdrag(d)+sidePanel(d,cfg);
+  main.className='v-'+view;
+  if(view==='oppdrag')main.innerHTML=renderOppdrag(d)+(cfg.sidepanel?sidePanel(d,cfg):'');
+  else if(view==='kalender')main.innerHTML=renderCal(d,{uker:cfg.uker||4,maks:cfg.vertikal?6:3})+(cfg.osv?osvCard(OKONOMI):'');
+  else if(view==='utstyr')main.innerHTML=renderUtstyr(d);
   else{const cols=(cfg.kolonner||[]).map(k=>d.personer?.[k]).filter(Boolean);const wide=cols.length<=2;
     main.innerHTML=cols.map(p=>personCard(p,wide)).join('')+(cfg.sidepanel?sidePanel(d,cfg):'');}
   requestAnimationFrame(()=>requestAnimationFrame(autofit));
@@ -340,7 +415,7 @@ async function load(){
     if(!r.ok)throw new Error(r.status);
     const txt=await r.text();const d=JSON.parse(txt);
     let okTxt='';
-    if(SCREEN==='4'){try{const r2=await fetch('okonomi.json?t='+Date.now(),{cache:'no-store'});if(r2.ok){okTxt=await r2.text();OKONOMI=JSON.parse(okTxt);}}catch(e){}}
+    {try{const r2=await fetch('okonomi.json?t='+Date.now(),{cache:'no-store'});if(r2.ok){okTxt=await r2.text();OKONOMI=JSON.parse(okTxt);}}catch(e){}}
     if(txt+okTxt!==lastJSON){lastJSON=txt+okTxt;render(d);}
     document.getElementById('dot').classList.remove('off');
     const u=d.oppdatert?new Date(d.oppdatert):null;

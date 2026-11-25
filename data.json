@@ -1,8 +1,15 @@
 {
-  "oppdatert": "2026-11-25T15:14",
+  "oppdatert": "2026-11-25T15:55",
   "undertittel": "Lager og verksted",
   "beskjed": "Oh brodder, where art thou? ❄️ Det er glatt ute – husk broddene!",
   "skjermer": {
+    "1": {
+      "tittel": "Kalender",
+      "visning": "kalender",
+      "vertikal": true,
+      "uker": 4,
+      "osv": true
+    },
     "2": {
       "tittel": "Gjøreliste",
       "kolonner": [
@@ -23,7 +30,12 @@
     },
     "4": {
       "tittel": "Oppdrag",
-      "beskjed": false
+      "visning": "oppdrag"
+    },
+    "5": {
+      "tittel": "Utstyr",
+      "undertittel": "Amphiscene · Dry hire",
+      "visning": "utstyr"
     }
   },
   "personer": {
