@@ -232,11 +232,15 @@ addEventListener('resize',fit);fit();
 
 function osloNow(){return new Date(new Date().toLocaleString('en-US',{timeZone:'Europe/Oslo'}));}
 function isoWeek(d){const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const n=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-n);const y=new Date(Date.UTC(t.getUTCFullYear(),0,1));return Math.ceil(((t-y)/864e5+1)/7);}
-const fmtWd=new Intl.DateTimeFormat('nb-NO',{weekday:'long',timeZone:'Europe/Oslo'});
-const fmtDm=new Intl.DateTimeFormat('nb-NO',{day:'numeric',month:'long',year:'numeric',timeZone:'Europe/Oslo'});
+// Norske navn skrevet ut selv – spillerne mangler norsk språkdata, så Intl gir engelsk
+const MND=['januar','februar','mars','april','mai','juni','juli','august','september','oktober','november','desember'];
+const MNDK=['jan.','feb.','mar.','apr.','mai','jun.','jul.','aug.','sep.','okt.','nov.','des.'];
+const DAG=['søndag','mandag','tirsdag','onsdag','torsdag','fredag','lørdag'];
+const fmtWd={format:d=>DAG[d.getDay()]};
+const fmtDm={format:d=>`${d.getDate()}. ${MND[d.getMonth()]} ${d.getFullYear()}`};
 function tick(){const n=osloNow();
   document.getElementById('clock').textContent=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
-  document.getElementById('date').innerHTML=`<b>${fmtWd.format(new Date())}</b>${fmtDm.format(new Date())}`;}
+  document.getElementById('date').innerHTML=`<b>${fmtWd.format(n)}</b>${fmtDm.format(n)}`;}
 setInterval(tick,1000);tick();
 
 function groupTasks(list){const g=[],idx={};for(const t of list||[]){const k=t.kategori||'Annet';if(!(k in idx)){idx[k]=g.length;g.push({k,items:[]});}g[idx[k]].items.push(t);}return g;}
@@ -274,8 +278,8 @@ function personCard(p,wide){
 
 // Fakturert denne måneden for Oslo Sveiseverksted – fra okonomi.json (oppdateres automatisk fra Tripletex)
 let OKONOMI=null;
-const fmtKr=n=>Math.round(n||0).toLocaleString('nb-NO');
-const fmtMnd=m=>{if(!m)return '';const[y,mm]=m.split('-').map(Number);return new Intl.DateTimeFormat('nb-NO',{month:'long',timeZone:'Europe/Oslo'}).format(new Date(y,mm-1,15));};
+const fmtKr=n=>String(Math.round(n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0');
+const fmtMnd=m=>{if(!m)return '';const[y,mm]=m.split('-').map(Number);return MND[mm-1];};
 function osvCard(o){const f=o&&o.osvFakturert;if(!f)return '';
   const n=osloNow();const cur=`${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
   // Ny måned før neste oppdatering: vis 0 i stedet for forrige måneds tall
@@ -301,8 +305,8 @@ function utleieInfo(u){if(u.info)return u.info;const t=parseD(u.til);if(t)return
 function weekStart(w){const now=osloNow();let y=now.getFullYear();if(w<isoWeek(now)-1)y++;const j4=new Date(y,0,4);const m=new Date(j4);m.setDate(j4.getDate()-((j4.getDay()+6)%7)+(w-1)*7);return m;}
 function parseD(s){if(!s)return null;const[y,m,dd]=s.slice(0,10).split('-').map(Number);return new Date(y,m-1,dd);}
 const dayKey=d=>`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
-const fmtShort=new Intl.DateTimeFormat('nb-NO',{day:'numeric',month:'short'});
-const fmtDay=new Intl.DateTimeFormat('nb-NO',{weekday:'long',day:'numeric',month:'long'});
+const fmtShort={format:d=>`${d.getDate()}. ${MNDK[d.getMonth()]}`};
+const fmtDay={format:d=>`${DAG[d.getDay()]} ${d.getDate()}. ${MND[d.getMonth()]}`};
 
 function chk(j){const L=j.sjekkliste||[];if(!L.length)return '';const done=L.filter(x=>x.ferdig).length;
   return `<div class="chk"><div class="chk-h">Sjekkliste · ${done}/${L.length}<span class="bar2"><i style="width:${Math.round(done/L.length*100)}%"></i></span></div>${L.map(x=>`<div class="chk-i${x.ferdig?' done':''}"><span class="cb"></span><div>${esc(x.tekst)}${x.hvem?`<small>${esc(x.hvem)}</small>`:''}</div></div>`).join('')}</div>`;}
@@ -420,7 +424,7 @@ async function load(){
     if(txt+okTxt!==lastJSON){lastJSON=txt+okTxt;render(d);}
     document.getElementById('dot').classList.remove('off');
     const u=d.oppdatert?new Date(d.oppdatert):null;
-    document.getElementById('f-upd').textContent=u&&!isNaN(u)?`Live · oppdatert ${u.toLocaleString('nb-NO',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}`:'Live';
+    document.getElementById('f-upd').textContent=u&&!isNaN(u)?`Live · oppdatert ${fmtShort.format(u)}, ${String(u.getHours()).padStart(2,'0')}:${String(u.getMinutes()).padStart(2,'0')}`:'Live';
   }catch(e){
     document.getElementById('dot').classList.add('off');
     document.getElementById('f-upd').textContent=lastJSON?'Frakoblet · viser sist kjente':'Får ikke hentet data';
