@@ -1,16 +1,16 @@
 {
-  "oppdatert": "2026-11-23T12:01",
+  "oppdatert": "2026-11-25T15:14",
   "undertittel": "Lager og verksted",
   "beskjed": "Oh brodder, where art thou? ❄️ Det er glatt ute – husk broddene!",
   "skjermer": {
-    "venstre": {
+    "2": {
       "tittel": "Gjøreliste",
       "kolonner": [
         "andy",
         "christoph"
       ]
     },
-    "midt": {
+    "3": {
       "tittel": "Gjøreliste",
       "kolonner": [
         "kristian",
@@ -21,7 +21,7 @@
       "beskjed": true,
       "utleie": false
     },
-    "hoyre": {
+    "4": {
       "tittel": "Oppdrag",
       "beskjed": false
     }

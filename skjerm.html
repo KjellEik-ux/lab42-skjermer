@@ -171,7 +171,9 @@ footer .pulse.off{background:var(--warning);box-shadow:0 0 0 4px rgba(245,158,11
 
 <script>
 const P=new URLSearchParams(location.search);
-const SCREEN=(P.get('skjerm')||P.get('s')||'venstre').toLowerCase();
+const ALIAS={venstre:'2',midt:'3',hoyre:'4'}; // gamle navn virker fortsatt
+const RAW=(P.get('skjerm')||P.get('s')||'2').toLowerCase();
+const SCREEN=ALIAS[RAW]||RAW;
 const DATA_URL=P.get('data')||'data.json';
 const POLL_MS=60*1000;
 
@@ -255,7 +257,7 @@ function sidePanel(d,cfg){
   return `<aside class="side">
     ${showUtl?`<section class="card${showMsg?'':' grow'}"><div class="card-h"><div><div class="ttl">Utleie</div><div class="desc">${u.length} ${u.length===1?'utleie':'utleier'}</div></div></div><div class="sep-h"></div>
       <div class="rlist">${u.map(x=>`<div class="ritem"><div class="ic">${ICON.box}</div><div><b>${esc(x.navn)}</b><span>${esc(x.info)}</span></div></div>`).join('')||'<div class="empty" style="padding:16px 0">Ingenting ute nå</div>'}</div></section>`:''}
-    ${SCREEN==='hoyre'?osvCard(OKONOMI):''}
+    ${SCREEN==='4'?osvCard(OKONOMI):''}
     ${showMsg?`<section class="card msg${showUtl?'':' grow'}"><div class="card-h"><div><div class="ttl">Beskjed</div></div></div><div class="sep-h"></div><p>${esc(d.beskjed||'')}</p></section>`:''}
   </aside>`;
 }
@@ -322,11 +324,11 @@ function render(d){
   const cfg=(d.skjermer||{})[SCREEN]||{};
   const n=osloNow();
   document.getElementById('h-title').textContent=cfg.tittel||'Gjøreliste';
-  document.getElementById('h-sub').textContent=SCREEN==='hoyre'?'Oppdrag':(d.undertittel||'Drift');
-  document.getElementById('h-badges').innerHTML=`<span class="badge secondary">Uke ${isoWeek(n)}</span>${d.frist&&SCREEN!=='hoyre'?`<span class="badge" style="--c:var(--warning)"><span class="dot"></span>Frist ${esc(d.frist)}</span>`:''}`;
-  document.getElementById('f-screen').textContent={venstre:'Skjerm 1 av 3 · Venstre',midt:'Skjerm 2 av 3 · Midt',hoyre:'Skjerm 3 av 3 · Høyre'}[SCREEN]||SCREEN;
+  document.getElementById('h-sub').textContent=SCREEN==='4'?'Oppdrag':(d.undertittel||'Drift');
+  document.getElementById('h-badges').innerHTML=`<span class="badge secondary">Uke ${isoWeek(n)}</span>${d.frist&&SCREEN!=='4'?`<span class="badge" style="--c:var(--warning)"><span class="dot"></span>Frist ${esc(d.frist)}</span>`:''}`;
+  document.getElementById('f-screen').textContent='Skjerm '+SCREEN+' av 5';
   const main=document.getElementById('main');
-  if(SCREEN==='hoyre')main.innerHTML=renderOppdrag(d)+sidePanel(d,cfg);
+  if(SCREEN==='4')main.innerHTML=renderOppdrag(d)+sidePanel(d,cfg);
   else{const cols=(cfg.kolonner||[]).map(k=>d.personer?.[k]).filter(Boolean);const wide=cols.length<=2;
     main.innerHTML=cols.map(p=>personCard(p,wide)).join('')+(cfg.sidepanel?sidePanel(d,cfg):'');}
   requestAnimationFrame(()=>requestAnimationFrame(autofit));
@@ -338,7 +340,7 @@ async function load(){
     if(!r.ok)throw new Error(r.status);
     const txt=await r.text();const d=JSON.parse(txt);
     let okTxt='';
-    if(SCREEN==='hoyre'){try{const r2=await fetch('okonomi.json?t='+Date.now(),{cache:'no-store'});if(r2.ok){okTxt=await r2.text();OKONOMI=JSON.parse(okTxt);}}catch(e){}}
+    if(SCREEN==='4'){try{const r2=await fetch('okonomi.json?t='+Date.now(),{cache:'no-store'});if(r2.ok){okTxt=await r2.text();OKONOMI=JSON.parse(okTxt);}}catch(e){}}
     if(txt+okTxt!==lastJSON){lastJSON=txt+okTxt;render(d);}
     document.getElementById('dot').classList.remove('off');
     const u=d.oppdatert?new Date(d.oppdatert):null;
