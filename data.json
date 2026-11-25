@@ -1,5 +1,5 @@
 {
-  "oppdatert": "2026-11-25T15:55",
+  "oppdatert": "2026-11-25T15:57",
   "undertittel": "Lager og verksted",
   "beskjed": "Oh brodder, where art thou? ❄️ Det er glatt ute – husk broddene!",
   "skjermer": {
@@ -8,7 +8,8 @@
       "visning": "kalender",
       "vertikal": true,
       "uker": 4,
-      "osv": true
+      "osv": true,
+      "rotasjon": 180
     },
     "2": {
       "tittel": "Gjøreliste",
